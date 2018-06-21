@@ -15,8 +15,7 @@ CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789|!?.+-_=@#$%&()/:;, "
 class Enum:
     @classmethod
     def all(cls):
-        keys = cls.__dict__.keys()
-        return [k for k in keys if not k.startswith("_") and k != "all"]
+        return [v for k, v in cls.__dict__.items() if not k.startswith("_") and k != "all"]
 
 
 class COLORS(Enum):
