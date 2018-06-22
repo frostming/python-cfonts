@@ -14,7 +14,16 @@ from typing import List, Tuple, Union
 
 import colorama
 import click
-from .consts import CHARS, BGCOLORS, FONTFACES, COLORS, SIZE, CANDYCOLORS, ANSI_COLORS, ALIGNMENT
+from .consts import (
+    CHARS,
+    BGCOLORS,
+    FONTFACES,
+    COLORS,
+    SIZE,
+    CANDYCOLORS,
+    ANSI_COLORS,
+    ALIGNMENT,
+)
 
 colorama.init()
 CharArray = List[str]
@@ -28,6 +37,7 @@ for k, v in ANSI_COLORS.items():
 
 
 class Font:
+
     def __init__(self, name: str) -> None:
         self.name = name
         if name == FONTFACES.console:
@@ -148,7 +158,13 @@ def colorize(character: str, font_colors: int, colors: CharArray) -> str:
             color = COLORS.system
         if color == COLORS.candy:
             color = random.choice(CANDYCOLORS.all())
-        character = ansi_styles[color][0] + character + ansi_styles[color][1]
+        character = ansi_styles[color][0] + re.sub(
+            r"(<([^>]+)>)", "", character
+        ) + ansi_styles[
+            color
+        ][
+            1
+        ]
     return character
 
 
@@ -166,13 +182,15 @@ def render_console(
     letter_spacing = max((letter_spacing or 1) - 1, 0)
     line_height = max(line_height - 1, 0)
     space = " " * letter_spacing
-    LINE_BREAK_RE = re.compile(r'\r\n|\r|\n|\|')
-    output_lines = [space.join(list(line)) for line in LINE_BREAK_RE.split(text.strip())]
+    LINE_BREAK_RE = re.compile(r"\r\n|\r|\n|\|")
+    output_lines = [
+        space.join(list(line)) for line in LINE_BREAK_RE.split(text.strip())
+    ]
 
     while i < len(output_lines):
         line = output_lines[i]
         if len(line) > size[0]:
-            output_lines[i : i + 1] = line[: size[0]].strip(), line[size[0] :].strip()
+            output_lines[i:i + 1] = line[:size[0]].strip(), line[size[0]:].strip()
             line = output_lines[i]
         if len(colors) > 0 and colors[0] == COLORS.candy:
             output.append("".join(colorize(c, 1, colors) for c in line))
@@ -200,7 +218,7 @@ def render(
     space: bool = True,
     max_length: int = 0,
 ) -> str:
-    output = []     # type: CharArray
+    output = []  # type: CharArray
     lines = 0
     font_face = get_font(font)
     if font == FONTFACES.console:

@@ -78,3 +78,9 @@ def test_colorize_with_two_colors():
         colorize(text, 2, ["red", "red"])
         == "test string \x1b[31mwith\x1b[39m one \x1b[31mcolor\x1b[39m placeholders"
     )
+
+
+def test_colorize_candy_color(strip_color):
+    text = colorize("<c1>text</c1>", 1, ["candy"])
+    assert strip_color(text) == "text"
+    assert len(text) > len("text")
