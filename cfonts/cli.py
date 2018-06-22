@@ -8,7 +8,7 @@
 """
 import click
 from .consts import *
-from .core import say
+from .core import say, render
 
 
 @click.option(
@@ -52,7 +52,7 @@ from .core import say
     help="Use to define the amount of maximum characters per line",
 )
 @click.argument("text", required=True)
-@click.version_option()
+@click.version_option(prog_name=render("cfonts", font="console", colors=["candy"]))
 @click.command(
     help="This is a tool for sexy fonts in the console. Give your cli some love."
 )

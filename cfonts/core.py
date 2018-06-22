@@ -10,15 +10,16 @@ import json
 import random
 import re
 from pathlib import Path
-from typing import Sequence, Tuple
+from typing import List, Tuple, Union
 
 import colorama
 import click
 from .consts import CHARS, BGCOLORS, FONTFACES, COLORS, SIZE, CANDYCOLORS, ANSY_COLORS
 
 colorama.init()
-CharArray = Sequence[str]
-SizeTuple = Tuple[int, int]
+CharArray = List[str]
+SizeTuple = Tuple[int, ...]
+LetterSpacing = Union[int, None]
 
 ansi_styles = {"system": ("", "")}
 for k, v in ANSY_COLORS.items():
@@ -27,7 +28,7 @@ for k, v in ANSY_COLORS.items():
 
 
 class Font:
-    def __init__(self, name: str):
+    def __init__(self, name: str) -> None:
         self.name = name
         if name == FONTFACES.console:
             self.colors = 1
@@ -35,11 +36,7 @@ class Font:
             return
         font_file = (Path(__file__) / f"../../fonts/{name}.json").resolve()
         font_face = json.loads(font_file.read_text("utf-8"))
-        self.colors = font_face["colors"]
-        self.lines = font_face["lines"]
-        self.buffer = font_face["buffer"]
-        self.letterspace = font_face["letterspace"]
-        self.chars = font_face["chars"]
+        self.__dict__.update(font_face)
 
     def add_letter_spacing(
         self, output: CharArray, colors: CharArray, letter_spacing: int
@@ -86,14 +83,14 @@ def get_font(font: str) -> Font:
     return Font(font)
 
 
-def clean_input(input: str, allowed_chars: str = CHARS) -> str:
+def clean_input(text: str, allowed_chars: str = CHARS) -> str:
     """Filter only allowed characters.
 
-    :param input: The input text to be filtered
+    :param text: The input text to be filtered
     :param allowed_chars: Allowed characters
     :returns: The filtered input text
     """
-    return "".join(c for c in input if c in allowed_chars)
+    return "".join(c for c in text if c in allowed_chars)
 
 
 def char_length(character: CharArray, letter_spacing: int = 0) -> int:
@@ -139,7 +136,7 @@ def colorize(character: str, font_colors: int, colors: CharArray) -> str:
             except IndexError:
                 color = COLORS.system
             if color == COLORS.candy:
-                color = random.choice(CANDYCOLORS)
+                color = random.choice(CANDYCOLORS.all())
 
             character = re.sub(f"<c{i + 1}>", ansi_styles[color][0], character)
             character = re.sub(f"</c{i + 1}>", ansi_styles[color][1], character)
@@ -154,11 +151,19 @@ def colorize(character: str, font_colors: int, colors: CharArray) -> str:
     return character
 
 
-def render_console(text: str, *, size: SizeTuple = SIZE, **options) -> CharArray:
+def render_console(
+    text: str,
+    *,
+    size: SizeTuple = SIZE,
+    colors: CharArray = [],
+    align: str = "left",
+    letter_spacing: LetterSpacing = None,
+    line_height: int = 1,
+) -> CharArray:
     output = []
     i = 0
-    letter_spacing = max(options.get("letter_spacing", 1) - 1, 0)
-    line_height = max(options.get("line_height", 1) - 1, 0)
+    letter_spacing = max((letter_spacing or 1) - 1, 0)
+    line_height = max(line_height - 1, 0)
     space = " " * letter_spacing
     output_lines = [space.join(list(line)) for line in text.strip().splitlines()]
 
@@ -167,12 +172,12 @@ def render_console(text: str, *, size: SizeTuple = SIZE, **options) -> CharArray
         if len(line) > size[0]:
             output_lines[i : i + 1] = line[: size[0]].strip(), line[size[0] :].strip()
             line = output_lines[i]
-        if len(options["colors"]) > 0 and options["colors"][0] == COLORS.candy:
-            output.append("".join(colorize(c, 1, options["colors"]) for c in line))
+        if len(colors) > 0 and colors[0] == COLORS.candy:
+            output.append("".join(colorize(c, 1, colors) for c in line))
         else:
             output.append(line)
 
-        output = align_text(output, len(line), 1, options["align"], size)
+        output = align_text(output, len(line), 1, align, size)
         output = add_line(output, [], line_height)
 
         i += 1
@@ -180,30 +185,45 @@ def render_console(text: str, *, size: SizeTuple = SIZE, **options) -> CharArray
     return output
 
 
-def render(text: str, *, font: str, size: SizeTuple = SIZE, **options) -> CharArray:
-    output = []
+def render(
+    text: str,
+    *,
+    font: str = FONTFACES.block,
+    size: SizeTuple = SIZE,
+    colors: CharArray = [],
+    background: str = BGCOLORS.transparent,
+    align: str = "left",
+    letter_spacing: LetterSpacing = None,
+    line_height: int = 1,
+    space: bool = False,
+    max_length: int = 0,
+) -> str:
+    output = []     # type: CharArray
     lines = 0
-
     font_face = get_font(font)
     if font == FONTFACES.console:
         # console fontface is pretty easy to process
-        if not options.get("letter_spacing"):
-            options["letter_spacing"] = 1
-        output = render_console(text, size=size, **options)
+        output = render_console(
+            text,
+            size=size,
+            colors=colors,
+            align=align,
+            letter_spacing=letter_spacing,
+            line_height=line_height,
+        )
         lines = len(output)
     else:
-        letter_spacing = options.get(
-            "letter_spacing", char_length(font_face.letterspace)
-        )
+        if letter_spacing is None:
+            letter_spacing = char_length(font_face.letterspace)
         line_length = char_length(font_face.buffer, letter_spacing)
         max_chars = 0
-        output = add_line([], font_face.buffer, options["line_height"])
+        output = add_line([], font_face.buffer, line_height)
         lines += 1
-        output = font_face.add_letter_spacing(output, options["colors"], letter_spacing)
+        output = font_face.add_letter_spacing(output, colors, letter_spacing)
         line_length += (
             char_length(font_face.letterspace, letter_spacing) * letter_spacing
         )
-
+        text = clean_input(text.upper())
         for c in text:
             c = c.upper()
             last_line_length = line_length
@@ -215,14 +235,14 @@ def render(text: str, *, font: str, size: SizeTuple = SIZE, **options) -> CharAr
                 )
 
             if (
-                max_chars > options["max_length"]
-                and options["max_length"] != 0
+                max_chars > max_length
+                and max_length != 0
                 or c == "|"
                 or line_length > size[0]
             ):
                 lines += 1
                 output = align_text(
-                    output, last_line_length, font_face.lines, options["align"], size
+                    output, last_line_length, font_face.lines, align, size
                 )
 
                 line_length = char_length(font_face.buffer, letter_spacing)
@@ -237,34 +257,28 @@ def render(text: str, *, font: str, size: SizeTuple = SIZE, **options) -> CharAr
                         * letter_spacing
                     )
                 max_chars = 0
-                output = add_line(output, font_face.buffer, options["line_height"])
-                output = font_face.add_letter_spacing(
-                    output, options["colors"], letter_spacing
-                )
+                output = add_line(output, font_face.buffer, line_height)
+                output = font_face.add_letter_spacing(output, colors, letter_spacing)
 
             if c != "|":
-                output = font_face.add_char(output, c, options["colors"])
-                output = font_face.add_letter_spacing(
-                    output, options["colors"], letter_spacing
-                )
+                output = font_face.add_char(output, c, colors)
+                output = font_face.add_letter_spacing(output, colors, letter_spacing)
 
-        output = align_text(
-            output, line_length, font_face.lines, options["align"], size
-        )
+        output = align_text(output, line_length, font_face.lines, align, size)
 
     write = "\n".join(output)
     if font_face.colors <= 1:
-        write = colorize(write, font_face.colors, options["colors"])
-    if options["space"]:
+        write = colorize(write, font_face.colors, colors)
+    if space:
         write = f"\n\n{write}\n\n"
-    if options["background"] != BGCOLORS.transparent:
-        bg_color = "bg" + options["background"]
+    if background != BGCOLORS.transparent:
+        bg_color = "bg" + background
         write = ansi_styles[bg_color][0] + "\n" + write + ansi_styles[bg_color][1]
 
     return write
 
 
-def say(text: str, *, font: str, size: SizeTuple = SIZE, **options):
-    write = render(text, font=font, size=size, **options)
+def say(text: str, **options):
+    write = render(text, **options)
     if write:
         click.echo(write)

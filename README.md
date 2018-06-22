@@ -18,4 +18,4 @@ WIP: Not released yet
 ## License
 
 The project is originated by [@dominikwilkowski](https://github.com/dominikwilkowski), under GPLv2 license.
-Ported by [@frostming](https://github.com/frostming), under GPLV2 license. See [LICENSE](/LICENSE) for details.
+Ported by [@frostming](https://github.com/frostming), under GPL22 license. See [LICENSE](/LICENSE) for details.
