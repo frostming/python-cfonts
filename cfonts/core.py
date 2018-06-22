@@ -14,7 +14,7 @@ from typing import List, Tuple, Union
 
 import colorama
 import click
-from .consts import CHARS, BGCOLORS, FONTFACES, COLORS, SIZE, CANDYCOLORS, ANSY_COLORS
+from .consts import CHARS, BGCOLORS, FONTFACES, COLORS, SIZE, CANDYCOLORS, ANSI_COLORS, ALIGNMENT
 
 colorama.init()
 CharArray = List[str]
@@ -22,7 +22,7 @@ SizeTuple = Tuple[int, ...]
 LetterSpacing = Union[int, None]
 
 ansi_styles = {"system": ("", "")}
-for k, v in ANSY_COLORS.items():
+for k, v in ANSI_COLORS.items():
     ansi_styles[k] = (f"\x1b[{v[0]}m", f"\x1b[{v[1]}m")
     ansi_styles["bg" + k] = (f"\x1b[{v[0] + 10}m", f"\x1b[{v[1] + 10}m")
 
@@ -90,7 +90,7 @@ def clean_input(text: str, allowed_chars: str = CHARS) -> str:
     :param allowed_chars: Allowed characters
     :returns: The filtered input text
     """
-    return "".join(c for c in text if c in allowed_chars)
+    return "".join(c for c in text if c.upper() in allowed_chars)
 
 
 def char_length(character: CharArray, letter_spacing: int = 0) -> int:
@@ -116,6 +116,7 @@ def align_text(
     align: str,
     size: SizeTuple = SIZE,
 ) -> CharArray:
+    assert align in ALIGNMENT
     space = 0
     if align == "center":
         space = (size[0] - line_length) // 2
@@ -165,7 +166,8 @@ def render_console(
     letter_spacing = max((letter_spacing or 1) - 1, 0)
     line_height = max(line_height - 1, 0)
     space = " " * letter_spacing
-    output_lines = [space.join(list(line)) for line in text.strip().splitlines()]
+    LINE_BREAK_RE = re.compile(r'\r\n|\r|\n|\|')
+    output_lines = [space.join(list(line)) for line in LINE_BREAK_RE.split(text.strip())]
 
     while i < len(output_lines):
         line = output_lines[i]
@@ -195,7 +197,7 @@ def render(
     align: str = "left",
     letter_spacing: LetterSpacing = None,
     line_height: int = 1,
-    space: bool = False,
+    space: bool = True,
     max_length: int = 0,
 ) -> str:
     output = []     # type: CharArray
@@ -215,7 +217,7 @@ def render(
     else:
         if letter_spacing is None:
             letter_spacing = char_length(font_face.letterspace)
-        line_length = char_length(font_face.buffer, letter_spacing)
+        line_length = char_length(font_face.buffer)
         max_chars = 0
         output = add_line([], font_face.buffer, line_height)
         lines += 1
@@ -223,7 +225,7 @@ def render(
         line_length += (
             char_length(font_face.letterspace, letter_spacing) * letter_spacing
         )
-        text = clean_input(text.upper())
+        text = clean_input(text)
         for c in text:
             c = c.upper()
             last_line_length = line_length
@@ -245,7 +247,7 @@ def render(
                     output, last_line_length, font_face.lines, align, size
                 )
 
-                line_length = char_length(font_face.buffer, letter_spacing)
+                line_length = char_length(font_face.buffer)
                 line_length += (
                     char_length(font_face.letterspace, letter_spacing) * letter_spacing
                 )

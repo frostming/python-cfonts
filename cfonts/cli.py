@@ -7,7 +7,7 @@
     :author: Frost Ming<mianghong@gmail.com>
 """
 import click
-from .consts import *
+from .consts import *   # noqa
 from .core import say, render
 
 
@@ -43,6 +43,7 @@ from .core import say, render
     "-s",
     "--spaceless",
     default=True,
+    is_flag=True,
     help="Use to disable the padding around your output",
 )
 @click.option(
@@ -68,14 +69,13 @@ def cli(
     max_length,
 ):
     colors = colors.split(",")
-    space = not spaceless
     options = {
         "font": font,
         "colors": colors,
         "background": background,
         "align": align,
         "line_height": line_height,
-        "space": space,
+        "space": spaceless,
         "max_length": max_length,
     }
     if letter_spacing is not None:

@@ -6,6 +6,7 @@
  ╚██████╗ ██║      ╚██████╔╝ ██║ ╚████║    ██║    ███████║
   ╚═════╝ ╚═╝       ╚═════╝  ╚═╝  ╚═══╝    ╚═╝    ╚══════╝
 ```
+[![Build Status](https://travis-ci.org/frostming/python-cfonts.svg?branch=master)](https://travis-ci.org/frostming/python-cfonts)
 
 This is a Python Port of [cfonts](https://github.com/dominikwilkowski/cfonts)
 
@@ -18,4 +19,4 @@ WIP: Not released yet
 ## License
 
 The project is originated by [@dominikwilkowski](https://github.com/dominikwilkowski), under GPLv2 license.
-Ported by [@frostming](https://github.com/frostming), under GPL22 license. See [LICENSE](/LICENSE) for details.
+Ported by [@frostming](https://github.com/frostming), under GPLv2 license. See [LICENSE](/LICENSE) for details

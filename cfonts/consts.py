@@ -90,7 +90,7 @@ class FONTFACES(Enum):
     huge = "huge"
 
 
-ANSY_COLORS = {
+ANSI_COLORS = {
     "black": [30, 39],
     "red": [31, 39],
     "green": [32, 39],
