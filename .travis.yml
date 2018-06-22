@@ -1,0 +1,17 @@
+language: python
+
+python:
+  - "3.6"
+  - "3.7-dev"
+  - "pypy"
+
+install:
+  - pip install --upgrade pipenv
+  - pipenv install -d --deploy
+
+script:
+  - pipenv run flake8 --ignore=W,E203,F405
+  - pipenv run pytest
+
+notification:
+  email: false
