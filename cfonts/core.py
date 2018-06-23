@@ -44,7 +44,7 @@ class Font:
             self.colors = 1
             self.lines = 1
             return
-        font_file = (Path(__file__) / f"../../fonts/{name}.json").resolve()
+        font_file = (Path(__file__) / f"../fonts/{name}.json").resolve()
         font_face = json.loads(font_file.read_text("utf-8"))
         self.__dict__.update(font_face)
 
