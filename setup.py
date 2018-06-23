@@ -18,7 +18,7 @@ URL = "https://github.com/frostming/python-cfonts"
 EMAIL = "mianghong@gmail.com"
 AUTHOR = "Frost Ming"
 REQUIRES_PYTHON = ">=3.6.0"
-VERSION = "0.2.0"
+VERSION = "0.2.1"
 
 # What packages are required for this module to be executed?
 REQUIRED = ["click", "colorama"]
@@ -102,7 +102,7 @@ setup(
     classifiers=[
         # Trove classifiers
         # Full list: https://pypi.python.org/pypi?%3Aaction=list_classifiers
-        "OSI Approved :: GNU General Public License v2 (GPLv2)",
+        "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.6",
