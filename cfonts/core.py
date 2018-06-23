@@ -218,6 +218,20 @@ def render(
     space: bool = True,
     max_length: int = 0,
 ) -> str:
+    """Main function to get the colored output for a string.
+
+    :param text: the string you want to render
+    :param font: use to define the font
+    :param size: a (width, height) tuple to define the window size
+    :param colors: a list of color names to render sequentially
+    :param background: background color name
+    :param align: the alignment method: left/center/right
+    :param letter_spacing: the amount of spacing inserted between letters
+    :param line_height: the height of each line
+    :param space: whether to wrap the output with blank lines
+    :param max_length: define the max length of per line, use 0 to disable
+    :returns: the colored output string
+    """
     output = []  # type: CharArray
     lines = 0
     font_face = get_font(font)
@@ -298,7 +312,13 @@ def render(
     return write
 
 
-def say(text: str, **options):
+def say(text: str, **options) -> None:
+    """Render and write the output to stout.
+
+    :param text: the string you want to render
+    :param \**options: options passed as same as :func:`cfonts.render`
+    :returns: None
+    """
     write = render(text, **options)
     if write:
         click.echo(write)

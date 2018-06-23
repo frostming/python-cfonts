@@ -19,7 +19,9 @@ $ pip3 install python-cfonts
 ```
 
 ## Usage
+[Documentation](http://python-cfonts.readthedocs.io/)
 
+Command line interface:
 ```bash
 $ cfonts --help
 Usage: cfonts [OPTIONS] TEXT
@@ -43,7 +45,7 @@ Options:
                                   Use to define the font face
   --help                          Show this message and exit.
 ```
-![](/images/example.png)
+![](http://python-cfonts.readthedocs.io/_static/images/example.png)
 
 Or generate the fonts pragramatically:
 

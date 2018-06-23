@@ -10,6 +10,8 @@ twine = "*"
 "e1839a8" = {path = ".", editable = true}
 pytest = "*"
 "flake8" = "*"
+sphinx = "*"
+sphinx-click = "*"
 
 [requires]
 python_version = "3.6"
