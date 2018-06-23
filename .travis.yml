@@ -12,5 +12,5 @@ script:
   - pipenv run flake8 --ignore=W,E203,F405 --max-line-length=88
   - pipenv run pytest
 
-notification:
+notifications:
   email: false
