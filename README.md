@@ -10,12 +10,12 @@
 
 *This is a Python port of [cfonts](https://github.com/dominikwilkowski/cfonts). Thanks for the original code and beautiful console fonts!*
 
-> **NOTE:** This project supports Python >= 3.6 ONLY
+> **NOTE:** This project supports Python 2.7+ and 3.4+
 
 ## Installation
 
 ```bash
-$ pip3 install python-cfonts
+$ pip install python-cfonts
 ```
 
 ## Usage

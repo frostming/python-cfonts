@@ -17,11 +17,15 @@ DESCRIPTION = "Sexy fonts for the console"
 URL = "https://github.com/frostming/python-cfonts"
 EMAIL = "mianghong@gmail.com"
 AUTHOR = "Frost Ming"
-REQUIRES_PYTHON = ">=3.6.0"
+REQUIRES_PYTHON = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*"
 VERSION = None
 
 # What packages are required for this module to be executed?
-REQUIRED = ["click", "colorama"]
+REQUIRED = [
+    "click",
+    "colorama",
+    'backports.shutil_get_terminal_size;python_version<"3.4"'
+]
 
 # The rest you shouldn't have to touch too much :)
 # ------------------------------------------------
@@ -102,9 +106,14 @@ setup(
     classifiers=[
         # Trove classifiers
         # Full list: https://pypi.python.org/pypi?%3Aaction=list_classifiers
+        "Development Status :: 4 - Beta",
         "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
         "Programming Language :: Python",
+        "Programming Language :: Python :: 2",
+        "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.4",
+        "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: Implementation :: CPython",
         "Programming Language :: Python :: Implementation :: PyPy",
