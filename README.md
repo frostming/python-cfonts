@@ -66,3 +66,8 @@ $ pipenv run pytest
 
 The project is originated by [@dominikwilkowski](https://github.com/dominikwilkowski), under GPLv2 license.
 Ported by [@frostming](https://github.com/frostming), under GPLv2 license. See [LICENSE](/LICENSE) for details
+
+## Changelog
+
+- **v0.3.0** Supports Python 2.7
+- **v0.2.0** Initial commit and testing
