@@ -10,12 +10,12 @@
 
 *This is a Python port of [cfonts](https://github.com/dominikwilkowski/cfonts). Thanks for the original code and beautiful console fonts!*
 
-> **NOTE:** This project supports Python >= 3.6 ONLY
+> **NOTE:** This project supports Python 2.7+ and 3.4+
 
 ## Installation
 
 ```bash
-$ pip3 install python-cfonts
+$ pip install python-cfonts
 ```
 
 ## Usage
@@ -66,3 +66,8 @@ $ pipenv run pytest
 
 The project is originated by [@dominikwilkowski](https://github.com/dominikwilkowski), under GPLv2 license.
 Ported by [@frostming](https://github.com/frostming), under GPLv2 license. See [LICENSE](/LICENSE) for details
+
+## Changelog
+
+- **v0.3.0** Supports Python 2.7
+- **v0.2.0** Initial commit and testing

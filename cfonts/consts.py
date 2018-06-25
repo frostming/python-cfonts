@@ -6,7 +6,10 @@
     :license: GNU GPLv2
     :author: Frost Ming<mianghong@gmail.com>
 """
-from shutil import get_terminal_size
+try:
+    from shutil import get_terminal_size
+except ImportError:
+    from backports.shutil_get_terminal_size import get_terminal_size
 
 SIZE = tuple(get_terminal_size((80, 24)))
 CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789|!?.+-_=@#$%&()/:;, "

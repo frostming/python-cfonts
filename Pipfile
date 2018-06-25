@@ -12,6 +12,3 @@ pytest = "*"
 "flake8" = "*"
 sphinx = "*"
 sphinx-click = "*"
-
-[requires]
-python_version = "3.6"

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Test utility functions"""
 from cfonts.core import add_line, char_length, align_text, clean_input, colorize
 
@@ -69,7 +70,7 @@ def test_clean_input():
 def test_colorize_without_color_placeholder():
     text = "test string without color placeholders"
     assert colorize(text, 1, []) == text
-    assert colorize(text, 1, ["red"]) == f"\x1b[31m{text}\x1b[39m"
+    assert colorize(text, 1, ["red"]) == "\x1b[31m{}\x1b[39m".format(text)
 
 
 def test_colorize_with_two_colors():

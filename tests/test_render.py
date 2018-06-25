@@ -1,16 +1,17 @@
 # -*- coding: utf-8 -*-
 # flake8: noqa
+from __future__ import unicode_literals
 import pytest
 from cfonts import render
 
 
 def test_render_console():
-    text = render("text", font="console")
+    text = render("text", font="console", size=(100, 10))
     assert text == "\n\ntext\n\n"
 
 
 def test_render_console_with_color():
-    text = render("text", font="console", colors=["red"])
+    text = render("text", font="console", colors=["red"], size=(100, 10))
     assert text == "\n\n\x1b[31mtext\x1b[39m\n\n"
 
 
@@ -28,7 +29,7 @@ def test_render_invalid_input():
 
 
 def test_render_block_font():
-    text = render("text")
+    text = render("text", size=(100, 10))
     assert text == (
         "\n\n"
         " ████████╗ ███████╗ ██╗  ██╗ ████████╗ \n"
