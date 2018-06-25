@@ -42,7 +42,7 @@ class Font:
         font_file = os.path.abspath(
             os.path.join(os.path.dirname(__file__), "fonts/{}.json".format(name))
         )
-        font_face = json.load(open(font_file, "rb"))
+        font_face = json.loads(open(font_file, "rb").read().decode("utf-8"))
         self.__dict__.update(font_face)
 
     def add_letter_spacing(self, output, colors, letter_spacing):
@@ -212,7 +212,7 @@ def render(
     :param max_length: define the max length of per line, use 0 to disable
     :returns: the colored output string
     """
-    output = []  # type
+    output = []
     lines = 0
     font_face = get_font(font)
     if font == FONTFACES.console:
