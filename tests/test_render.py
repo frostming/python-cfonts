@@ -12,7 +12,7 @@ def test_render_console():
 
 def test_render_console_with_color():
     text = render("text", font="console", colors=["red"], size=(100, 10))
-    assert text == "\n\n\x1b[31mtext\x1b[39m\n\n"
+    assert text == "\x1b[31m\n\ntext\n\n\x1b[39m"
 
 
 def test_render_invalid_input():
@@ -166,12 +166,12 @@ def test_render_remove_space():
 
 
 def test_render_background():
-    assert render("text", background="red", size=(100, 10)) == (
-        "\x1b[41m\n\n\n"
-        " ████████╗ ███████╗ ██╗  ██╗ ████████╗ \n"
-        " ╚══██╔══╝ ██╔════╝ ╚██╗██╔╝ ╚══██╔══╝ \n"
-        "    ██║    █████╗    ╚███╔╝     ██║    \n"
-        "    ██║    ██╔══╝    ██╔██╗     ██║    \n"
-        "    ██║    ███████╗ ██╔╝ ██╗    ██║    \n"
-        "    ╚═╝    ╚══════╝ ╚═╝  ╚═╝    ╚═╝    \n\n\x1b[49m"
-    )
+    assert render("text", background="red", size=(50, 10)) == (
+        "\x1b[41m{0}\n{0}\n"
+        " ████████╗ ███████╗ ██╗  ██╗ ████████╗ {1}\n"
+        " ╚══██╔══╝ ██╔════╝ ╚██╗██╔╝ ╚══██╔══╝ {1}\n"
+        "    ██║    █████╗    ╚███╔╝     ██║    {1}\n"
+        "    ██║    ██╔══╝    ██╔██╗     ██║    {1}\n"
+        "    ██║    ███████╗ ██╔╝ ██╗    ██║    {1}\n"
+        "    ╚═╝    ╚══════╝ ╚═╝  ╚═╝    ╚═╝    {1}\n{0}\n{0}\x1b[49m"
+    ).format(" " * 50, " " * 11)
