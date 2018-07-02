@@ -7,7 +7,7 @@
     :author: Frost Ming<mianghong@gmail.com>
 """
 import click
-from .consts import *   # noqa
+from .consts import *  # noqa
 from .core import say, render
 
 
@@ -53,7 +53,9 @@ from .core import say, render
     help="Use to define the amount of maximum characters per line",
 )
 @click.argument("text", required=True)
-@click.version_option(prog_name=render("cfonts", font="console", colors=["candy"]))
+@click.version_option(
+    prog_name=render("cfonts", font="console", colors=["candy"], space=False)
+)
 @click.command(
     help="This is a tool for sexy fonts in the console. Give your cli some love."
 )
