@@ -69,5 +69,6 @@ Ported by [@frostming](https://github.com/frostming), under GPLv2 license. See [
 
 ## Changelog
 
-- **v0.3.0** Supports Python 2.7
-- **v0.2.0** Initial commit and testing
+- **v0.3.1** Fix a bug that the background doesn't span the full width.
+- **v0.3.0** Supports Python 2.7.
+- **v0.2.0** Initial commit and testing.
