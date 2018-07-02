@@ -280,14 +280,19 @@ def render(
 
         output = align_text(output, line_length, font_face.lines, align, size)
 
+    if space:
+        # Blank lines at the beginning and end
+        output = [""] * 2 + output + [""] * 2
+    if background != BGCOLORS.transparent:
+        # Fill whitespaces to the full width, see https://github.com/frostming/python-cfonts/issues/3
+        output = [(line + " " * (size[0] - len(_strip_color(line)))) for line in output]
+        bg_color = "bg" + background
+        if output:
+            output[0] = ansi_styles[bg_color][0] + output[0]
+            output[-1] += ansi_styles[bg_color][1]
     write = "\n".join(output)
     if font_face.colors <= 1:
         write = colorize(write, font_face.colors, colors)
-    if space:
-        write = "\n\n{}\n\n".format(write)
-    if background != BGCOLORS.transparent:
-        bg_color = "bg" + background
-        write = ansi_styles[bg_color][0] + "\n" + write + ansi_styles[bg_color][1]
 
     return write
 
@@ -302,3 +307,8 @@ def say(text, **options):
     write = render(text, **options)
     if write:
         click.echo(write)
+
+
+def _strip_color(text):
+    REGEX = re.compile(r'\x1b\[\d+?m')
+    return REGEX.sub('', text)
