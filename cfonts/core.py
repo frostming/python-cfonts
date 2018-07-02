@@ -284,7 +284,8 @@ def render(
         # Blank lines at the beginning and end
         output = [""] * 2 + output + [""] * 2
     if background != BGCOLORS.transparent:
-        # Fill whitespaces to the full width, see https://github.com/frostming/python-cfonts/issues/3
+        # Fill whitespaces to the full width.
+        # See https://github.com/frostming/python-cfonts/issues/3
         output = [(line + " " * (size[0] - len(_strip_color(line)))) for line in output]
         bg_color = "bg" + background
         if output:
