@@ -19,7 +19,7 @@ $ pip install python-cfonts
 ```
 
 ## Usage
-[Documentation](https://frostming.github.io/python-cfonts/)
+[Documentation](https://python-cfonts.readthedocs.io/python-cfonts/)
 
 Command line interface:
 ```bash
@@ -45,7 +45,7 @@ Options:
                                   Use to define the font face
   --help                          Show this message and exit.
 ```
-![](https://frostming.github.io/python-cfonts/_static/images/example.png)
+![](https://python-cfonts.readthedocs.io/en/latest/_images/example.png)
 
 Or generate the fonts pragramatically:
 
@@ -55,6 +55,24 @@ from cfonts import render, say
 output = render('Hello world', colors=['red', 'yellow'], align='center')
 print(output)
 ```
+## Supported Characters
+
+|     |     |     |     |             |
+|-----|-----|-----|-----|-------------|
+| `A` | `O` | `2` | `2` | `=`         |
+| `B` | `P` | `3` | `3` | `@`         |
+| `C` | `Q` | `4` | `4` | `#`         |
+| `D` | `R` | `5` | `5` | `$`         |
+| `E` | `S` | `6` | `6` | `%`         |
+| `F` | `T` | `7` | `7` | `&`         |
+| `G` | `U` | `8` | `8` | `(`         |
+| `H` | `V` | `9` | `9` | `)`         |
+| `I` | `W` | `!` | `!` | `/`         |
+| `J` | `X` | `?` | `?` | `:`         |
+| `K` | `Y` | `.` | `.` | `;`         |
+| `L` | `Z` | `+` | `+` | `,`         |
+| `M` | `0` | `-` | `-` | `'`         |
+| `N` | `1` | `_` | `_` | ` ` (space) |
 
 ## Tests
 
