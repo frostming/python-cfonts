@@ -7,23 +7,17 @@
     :author: Frost Ming<mianghong@gmail.com>
 """
 from __future__ import unicode_literals
+
 import json
-import os
+import pkgutil
 import random
 import re
 
-import colorama
 import click
-from .consts import (
-    CHARS,
-    BGCOLORS,
-    FONTFACES,
-    COLORS,
-    SIZE,
-    CANDYCOLORS,
-    ANSI_COLORS,
-    ALIGNMENT,
-)
+import colorama
+
+from .consts import (ALIGNMENT, ANSI_COLORS, BGCOLORS, CANDYCOLORS, CHARS,
+                     COLORS, FONTFACES, SIZE)
 
 colorama.init()
 ansi_styles = {"system": ("", "")}
@@ -39,10 +33,9 @@ class Font:
             self.colors = 1
             self.lines = 1
             return
-        font_file = os.path.abspath(
-            os.path.join(os.path.dirname(__file__), "fonts/{}.json".format(name))
+        font_face = json.loads(
+            pkgutil.get_data(__package__, "fonts/{}.json".format(name)).decode("utf-8")
         )
-        font_face = json.loads(open(font_file, "rb").read().decode("utf-8"))
         self.__dict__.update(font_face)
 
     def add_letter_spacing(self, output, colors, letter_spacing):

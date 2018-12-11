@@ -6,4 +6,4 @@
     :license: GNU GPLv2
     :author: Frost Ming<mianghong@gmail.com>
 """
-__version__ = '0.4.0'
+__version__ = '0.4.1-dev'
