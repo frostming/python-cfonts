@@ -1,11 +1,6 @@
 language: python
-
-python:
-  - "2.7"
-  - "3.4"
-  - "3.5"
-  - "3.6"
-  - "nightly"
+sudo: false
+cache: pip
 
 install:
   - pip install --upgrade pipenv
@@ -14,6 +9,15 @@ install:
 script:
   - pipenv run flake8 --ignore=W,E203,F405 --max-line-length=88
   - pipenv run pytest
+
+jobs:
+  include:
+    - python: "3.7"
+      dist: xenial
+      sudo: required
+    - python: "3.6"
+    - python: "3.5"
+    - python: "2.7"
 
 notifications:
   email: false

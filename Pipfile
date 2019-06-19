@@ -7,8 +7,8 @@ name = "pypi"
 
 [dev-packages]
 twine = "*"
-"e1839a8" = {path = ".", editable = true}
+python-cfonts = {path = ".", editable = true}
 pytest = "*"
-"flake8" = "*"
+flake8 = "*"
 sphinx = "*"
 sphinx-click = "*"

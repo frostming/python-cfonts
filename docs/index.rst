@@ -20,14 +20,14 @@ CFonts: Sexy fonts for the console
 
 This is a Python port of `@dominikwilkowski's cfonts <https://github.com/dominikwilkowski/cfonts>`_. Thanks for the original code and beautiful console fonts!
 
-    *This project supports Python 2.7+ and 3.4+*
+    *This project supports Python 2.7+ and 3.5+*
 
 Installation
 ------------
 
-**Recommended way:** use `pipsi <https://pypi.org/project/pipsi/>`_::
+**Recommended way:** use `pipsi <https://pypi.org/project/pipx/>`_::
 
-  $ pipsi install python-cfonts
+  $ pipx install python-cfonts
 
 Or alternatively, install using Pip::
 
