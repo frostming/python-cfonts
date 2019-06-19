@@ -3,12 +3,12 @@ sudo: false
 cache: pip
 
 install:
-  - pip install --upgrade pipenv
-  - pipenv install -d --deploy
+  - pip install -e .
+  - pip install -U flake8 pytest
 
 script:
-  - pipenv run flake8 --ignore=W,E203,F405 --max-line-length=88
-  - pipenv run pytest
+  - flake8 --ignore=W,E203,F405 --max-line-length=88
+  - pytest
 
 jobs:
   include:
