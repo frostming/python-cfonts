@@ -12,7 +12,7 @@ except ImportError:
     from backports.shutil_get_terminal_size import get_terminal_size
 
 SIZE = tuple(get_terminal_size((80, 24)))
-CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789|!?.+-_=@#$%&()/:;,' "
+CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789|!?.+-_=@#$%&()/:;,' \""
 
 
 class Enum:
@@ -91,6 +91,10 @@ class FONTFACES(Enum):
     simple3d = "simple3d"
     chrome = "chrome"
     huge = "huge"
+    grid = "grid"
+    pallet = "pallet"
+    shade = "shade"
+    slick = "slick"
 
 
 ANSI_COLORS = {
