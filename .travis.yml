@@ -3,12 +3,12 @@ sudo: false
 cache: pip
 
 install:
-  - pip install -e .
-  - pip install -U flake8 pytest
+  - pip install -U pdm
+  - pdm install -d
 
 script:
-  - flake8 --ignore=W,E203,F405 --max-line-length=88
-  - pytest
+  - pdm run flake8 --ignore=W,E203,F405 --max-line-length=88 cfonts tests
+  - pdm run pytest tests
 
 jobs:
   include:
