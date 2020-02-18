@@ -25,7 +25,7 @@ This is a Python port of `@dominikwilkowski's cfonts <https://github.com/dominik
 Installation
 ------------
 
-**Recommended way:** use `pipsi <https://pypi.org/project/pipx/>`_::
+**Recommended way:** use `pipx <https://pypi.org/project/pipx/>`_::
 
   $ pipx install python-cfonts
 

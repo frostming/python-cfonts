@@ -7,3 +7,6 @@ build/
 .pytest_cache/
 _build/
 .vscode/
+__pypackages__/
+.pdm.toml
+.idea/

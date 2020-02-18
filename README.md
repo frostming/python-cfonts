@@ -73,11 +73,21 @@ print(output)
 | `L` | `Z` | `+` | `+` | `,`         |
 | `M` | `0` | `-` | `-` | `'`         |
 | `N` | `1` | `_` | `_` | ` ` (space) |
+| `"` |
 
-## Tests
+## Contributing
 
+`python-cfonts` is managed by [pdm](https://github.com/frostming/pdm), first install it:
 ```bash
-$ pipenv run pytest
+pipx install pdm
+```
+Then, install a dependencies:
+```bash
+pdm install -d
+```
+Run tests:
+```bash
+$ pdm run pytest tests
 ```
 
 ## License
@@ -87,6 +97,7 @@ Ported by [@frostming](https://github.com/frostming), under GPLv2 license. See [
 
 ## Changelog
 
+- **v0.5.0** Add four new fonts and double quote as supported charater.
 - **v0.3.1** Fix a bug that the background doesn't span the full width.
 - **v0.3.0** Supports Python 2.7.
 - **v0.2.0** Initial commit and testing.
