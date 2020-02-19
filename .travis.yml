@@ -2,7 +2,7 @@ language: python
 sudo: false
 
 install:
-  - pip install -U pdm
+  - python -m pip install -U "pdm>=0.2.1"
   - pdm install -d
 
 script:
