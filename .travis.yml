@@ -2,12 +2,13 @@ language: python
 sudo: false
 
 install:
-  - python -m pip install -U "pdm>=0.2.1"
-  - pdm install -d
+  - pip install -U pip
+  - pip install -e .
+  - pip install flake8 pytests
 
 script:
-  - pdm run flake8 --ignore=W,E203,F405 --max-line-length=88 cfonts tests
-  - pdm run pytest tests
+  - flake8 --ignore=W,E203,F405 --max-line-length=88 cfonts tests
+  - pytest tests
 
 jobs:
   include:
