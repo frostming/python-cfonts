@@ -1,6 +1,5 @@
 language: python
 sudo: false
-cache: pip
 
 install:
   - pip install -U pdm
