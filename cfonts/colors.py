@@ -17,10 +17,7 @@ def hex_to_rgb(hex_string):
     assert len(hex_string) in (4, 7), "Hex color format is not correct."
     if len(hex_string) == 4:
         return tuple(int(c * 2, 16) for c in hex_string[1:])
-    return tuple(
-        int(hex_string[i:i + 2], 16)
-        for i in range(1, len(hex_string), 2)
-    )
+    return tuple(int(hex_string[i : i + 2], 16) for i in range(1, len(hex_string), 2))
 
 
 def rgb_to_hex(rgb):
@@ -72,7 +69,7 @@ def hsv_to_rgb(hsv):
         2: (p, v, t),
         3: (p, q, v),
         4: (t, p, v),
-        5: (v, p, q)
+        5: (v, p, q),
     }[hi]
     return tuple(int(c) for c in result)
 
@@ -110,7 +107,7 @@ def get_interpolated_hsv(start_hsv, end_hsv, steps, transition=False):
     if diff < 0:
         delta = diff if diff <= -180 else 360 + diff
     else:
-        delta = diff if diff >= 180 else 360 - diff
+        delta = diff if diff >= 180 else diff - 360
     delta = delta / (steps - 1)
     h_sequence = [(start_h + i * delta) % 360 for i in range(steps)]
     return zip(h_sequence, s_sequence, v_sequence)
@@ -118,8 +115,9 @@ def get_interpolated_hsv(start_hsv, end_hsv, steps, transition=False):
 
 class AnsiPen:
     """Generate ANSI color styles"""
-    CLOSE_BIT = '\x1b[39m'
-    BG_CLOSE_BIT = '\x1b[49m'
+
+    CLOSE_BIT = "\x1b[39m"
+    BG_CLOSE_BIT = "\x1b[49m"
 
     def style(self, color, background=False):
         if color == "system":
@@ -146,7 +144,7 @@ class AnsiPen:
     def get_gradient(self, colors, steps, transition=False):
         if transition and len(colors) < 2:
             raise ValueError("Transition gradient needs at least two colors")
-        elif not transition and colors != 2:
+        elif not transition and len(colors) != 2:
             raise ValueError("Gradient needs exactly two colors")
         colors = [_ensure_rgb(color) for color in colors]
         color_steps = [(steps - 1) // (len(colors) - 1)] * (len(colors) - 1)
@@ -174,15 +172,12 @@ class TrueColorPen(AnsiPen):
         open_bit = 48 if background else 38
         close = self.BG_CLOSE_BIT if background else self.CLOSE_BIT
         r, g, b = color
-        return Style(
-            "\x01\x1b[{};2;{};{};{}m".format(open_bit, r, g, b),
-            close
-        )
+        return Style("\x01\x1b[{};2;{};{};{}m".format(open_bit, r, g, b), close)
 
 
-if (
-    os.getenv("DISABLE_TRUECOLOR") or os.name == "nt"
-) and not os.getenv("ENABLE_TRUECOLOR"):
+if (os.getenv("DISABLE_TRUECOLOR") or os.name == "nt") and not os.getenv(
+    "ENABLE_TRUECOLOR"
+):
     # Disable truecolor for windows
     pen = AnsiPen()
 else:

@@ -11,7 +11,21 @@ from .consts import *  # noqa
 from .core import say, render
 
 
-@click.command()
+class CFontCommand(click.Command):
+    def format_help(self, ctx, formatter):
+        self.format_help_text(ctx, formatter)
+        self.format_usage(ctx, formatter)
+        self.format_options(ctx, formatter)
+        self.format_epilog(ctx, formatter)
+
+    def format_help_text(self, ctx, formatter):
+        banner = render("cfonts", gradient=["bright_red", "bright_green"])
+        formatter.write(banner)
+        formatter.write_text(self.help)
+        formatter.write_paragraph()
+
+
+@click.command(cls=CFontCommand)
 @click.option(
     "-f",
     "--font",
@@ -53,16 +67,14 @@ from .core import say, render
     help="Use to define the amount of maximum characters per line",
 )
 @click.option(
-    "-g",
-    "--gradient",
-    help="Define gradient colors(separated by comma)",
+    "-g", "--gradient", help="Define gradient colors(separated by comma)",
 )
 @click.option(
     "-i",
     "--independent-gradient",
     is_flag=True,
     help="Set this option to re-calculate the gradient colors for each new line."
-    "Only works in combination with the gradient option."
+    "Only works in combination with the gradient option.",
 )
 @click.option(
     "-t",
@@ -70,10 +82,13 @@ from .core import say, render
     "transition",
     is_flag=True,
     help="Set this option to generate your own gradients. "
-    "Each color set in the gradient option will then be transitioned to directly."
+    "Each color set in the gradient option will then be transitioned to directly.",
 )
 @click.version_option(
-    prog_name=render("cfonts", font="console", colors=["candy"], space=False)
+    None,
+    "-V",
+    "--version",
+    prog_name=render("cfonts", font="console", colors=["candy"], space=False),
 )
 @click.argument("text", required=True)
 def cli(
@@ -104,7 +119,7 @@ def cli(
         "max_length": max_length,
         "gradient": gradient,
         "independent_gradient": independent_gradient,
-        "transition": transition
+        "transition": transition,
     }
     if letter_spacing is not None:
         options["letter_spacing"] = letter_spacing

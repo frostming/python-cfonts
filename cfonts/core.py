@@ -17,8 +17,7 @@ import re
 import click
 import colorama
 
-from .consts import (ALIGNMENT, BGCOLORS, CANDYCOLORS, CHARS,
-                     COLORS, FONTFACES, SIZE)
+from .consts import ALIGNMENT, BGCOLORS, CANDYCOLORS, CHARS, COLORS, FONTFACES, SIZE
 from .colors import pen
 
 colorama.init()
@@ -139,11 +138,7 @@ def colorize(line, font_colors, colors):
         if color == COLORS.candy:
             color = random.choice(CANDYCOLORS.all())
         style = pen.style(color, False)
-        line = (
-            style.open
-            + re.sub(r"</?c\d+>", "", line)
-            + style.close
-        )
+        line = style.open + re.sub(r"</?c\d+>", "", line) + style.close
     return line
 
 
@@ -163,7 +158,7 @@ def render_console(
     while i < len(output_lines):
         line = output_lines[i]
         if len(line) > size[0]:
-            output_lines[i: i + 1] = line[: size[0]].strip(), line[size[0]:].strip()
+            output_lines[i : i + 1] = line[: size[0]].strip(), line[size[0] :].strip()
             line = output_lines[i]
         if len(colors) > 0 and colors[0] == COLORS.candy:
             output.append("".join(colorize(c, 1, colors) for c in line))
@@ -179,11 +174,11 @@ def render_console(
 
 
 def _find_left_most_non_space(line):
-    return min(i for i, c in enumerate(line) if c.strip() != '')
+    return min(i for i, c in enumerate(line) if c.strip() != "")
 
 
 def _find_right_most_non_space(line):
-    return max(i for i, c in enumerate(line) if c.strip() != '')
+    return max(i for i, c in enumerate(line) if c.strip() != "")
 
 
 def paint_gradient(
@@ -194,11 +189,11 @@ def paint_gradient(
         buffer = []
         start = 0
         for _ in range(lines):
-            temp = output[start:start + font_lines]
+            temp = output[start : start + font_lines]
             add_line(
                 buffer,
-                paint_gradient(temp, gradient, False, 1, font_lines, 0),
-                line_height
+                paint_gradient(temp, gradient, False, 1, font_lines, 0, transition),
+                line_height,
             )
             start += font_lines + line_height
         return buffer
@@ -293,11 +288,7 @@ def render(
                     char_length(font_face.letterspace, letter_spacing) * letter_spacing
                 )
 
-            if (
-                max_chars > max_length != 0
-                or c == "|"
-                or line_length > size[0]
-            ):
+            if max_chars > max_length != 0 or c == "|" or line_length > size[0]:
                 lines += 1
                 output = align_text(
                     output, last_line_length, font_face.lines, align, size
@@ -325,8 +316,13 @@ def render(
         output = align_text(output, line_length, font_face.lines, align, size)
         if gradient:
             output = paint_gradient(
-                output, gradient, independent_gradient, lines, font_face.lines,
-                line_height, transition
+                output,
+                gradient,
+                independent_gradient,
+                lines,
+                font_face.lines,
+                line_height,
+                transition,
             )
 
     output = [colorize(line, font_face.colors, colors) for line in output]
@@ -357,5 +353,6 @@ def say(text, **options):
 
 
 def _strip_color(text):
-    regex = re.compile(r'\x1b\[\d+?m')
-    return regex.sub('', text)
+    regex = re.compile(r"\x1b\[\d+?m")
+    return regex.sub("", text)
+
