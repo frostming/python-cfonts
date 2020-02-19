@@ -1,6 +1,5 @@
 [build-system]
-build-backend = "pdm.builders.api"
-requires = ["pdm"]
+requires = ["setuptools", "wheel"]
 
 [tool.pdm]
 name = "python-cfonts"

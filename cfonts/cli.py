@@ -11,6 +11,21 @@ from .consts import *  # noqa
 from .core import say, render
 
 
+class CFontCommand(click.Command):
+    def format_help(self, ctx, formatter):
+        self.format_help_text(ctx, formatter)
+        self.format_usage(ctx, formatter)
+        self.format_options(ctx, formatter)
+        self.format_epilog(ctx, formatter)
+
+    def format_help_text(self, ctx, formatter):
+        banner = render("cfonts", gradient=["bright_red", "bright_green"])
+        formatter.write(banner)
+        formatter.write_text(self.help)
+        formatter.write_paragraph()
+
+
+@click.command(cls=CFontCommand)
 @click.option(
     "-f",
     "--font",
@@ -25,7 +40,6 @@ from .core import say, render
     "-b",
     "--background",
     default=BGCOLORS.transparent,
-    type=click.Choice(BGCOLORS.all()),
     help="Use to define the background color",
 )
 @click.option(
@@ -52,13 +66,31 @@ from .core import say, render
     default=0,
     help="Use to define the amount of maximum characters per line",
 )
-@click.argument("text", required=True)
+@click.option(
+    "-g", "--gradient", help="Define gradient colors(separated by comma)",
+)
+@click.option(
+    "-i",
+    "--independent-gradient",
+    is_flag=True,
+    help="Set this option to re-calculate the gradient colors for each new line."
+    "Only works in combination with the gradient option.",
+)
+@click.option(
+    "-t",
+    "--transition-gradient",
+    "transition",
+    is_flag=True,
+    help="Set this option to generate your own gradients. "
+    "Each color set in the gradient option will then be transitioned to directly.",
+)
 @click.version_option(
-    prog_name=render("cfonts", font="console", colors=["candy"], space=False)
+    None,
+    "-V",
+    "--version",
+    prog_name=render("cfonts", font="console", colors=["candy"], space=False),
 )
-@click.command(
-    help="This is a tool for sexy fonts in the console. Give your cli some love."
-)
+@click.argument("text", required=True)
 def cli(
     text,
     font,
@@ -69,8 +101,14 @@ def cli(
     line_height,
     spaceless,
     max_length,
+    gradient,
+    independent_gradient,
+    transition,
 ):
-    colors = colors.split(",")
+    """This is a tool for sexy fonts in the console. Give your cli some love."""
+    colors = [c.strip() for c in colors.split(",")]
+    if gradient:
+        gradient = [g.strip() for g in gradient.split(",")]
     options = {
         "font": font,
         "colors": colors,
@@ -79,6 +117,9 @@ def cli(
         "line_height": line_height,
         "space": spaceless,
         "max_length": max_length,
+        "gradient": gradient,
+        "independent_gradient": independent_gradient,
+        "transition": transition,
     }
     if letter_spacing is not None:
         options["letter_spacing"] = letter_spacing

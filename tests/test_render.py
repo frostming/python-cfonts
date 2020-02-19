@@ -12,7 +12,7 @@ def test_render_console():
 
 def test_render_console_with_color():
     text = render("text", font="console", colors=["red"], size=(100, 10))
-    assert text == "\x1b[31m\n\ntext\n\n\x1b[39m"
+    assert text == "\n\n\x1b[31mtext\x1b[39m\n\n"
 
 
 def test_render_invalid_input():
