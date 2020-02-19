@@ -1,5 +1,4 @@
 """add_char and add letter space function"""
-import pytest
 
 
 def test_add_single_line(font):

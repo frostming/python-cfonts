@@ -8,7 +8,6 @@
 """
 from __future__ import unicode_literals
 
-import itertools
 import json
 import pkgutil
 import random
