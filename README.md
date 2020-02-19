@@ -97,6 +97,7 @@ Ported by [@frostming](https://github.com/frostming), under GPLv2 license. See [
 
 ## Changelog
 
+- **v1.0.0** Support gradient colors and transition gradient.
 - **v0.5.0** Add four new fonts and double quote as supported charater.
 - **v0.3.1** Fix a bug that the background doesn't span the full width.
 - **v0.3.0** Supports Python 2.7.
