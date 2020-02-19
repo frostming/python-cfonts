@@ -141,8 +141,8 @@ def test_color_conversion():
 
 def test_generate_gradients():
     pen = AnsiPen()
-    assert len(pen.get_gradient("red,green", 20)) == 20
-    assert len(pen.get_gradient("red,green", 23)) == 23
+    assert len(pen.get_gradient(["red", "green"], 20)) == 20
+    assert len(pen.get_gradient(["red", "green"], 23)) == 23
 
-    assert len(pen.get_gradient("red,yellow,green", 20)) == 20
-    assert len(pen.get_gradient("red,yellow,green", 23)) == 23
+    assert len(pen.get_gradient(["red", "yellow", "green"], 20)) == 20
+    assert len(pen.get_gradient(["red", "yellow", "green"], 23)) == 23

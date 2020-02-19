@@ -8,6 +8,7 @@
 """
 from __future__ import unicode_literals
 
+import itertools
 import json
 import pkgutil
 import random
@@ -35,19 +36,19 @@ class Font:
         )
         self.__dict__.update(font_face)
 
-    def add_letter_spacing(self, output, colors, letter_spacing):
+    def add_letter_spacing(self, output, letter_spacing):
         lines = len(output) - self.lines
         for i in range(lines, len(output)):
             idx = i - lines
-            space = colorize(self.letterspace[idx], self.colors, colors) or " "
+            space = self.letterspace[idx] or " "
             output[i] += space * letter_spacing
         return output
 
-    def add_char(self, output, char, colors):
+    def add_char(self, output, char):
         lines = len(output) - self.lines
         for i in range(lines, len(output)):
             idx = i - lines
-            output[i] += colorize(self.chars[char][idx], self.colors, colors)
+            output[i] += self.chars[char][idx]
         return output
 
 
@@ -118,7 +119,7 @@ def align_text(output, line_length, character_lines, align, size=SIZE):
     return output
 
 
-def colorize(character, font_colors, colors):
+def colorize(line, font_colors, colors):
     if font_colors > 1:
         for i in range(font_colors):
             try:
@@ -128,8 +129,8 @@ def colorize(character, font_colors, colors):
             if color == COLORS.candy:
                 color = random.choice(CANDYCOLORS.all())
             style = pen.style(color, False)
-            character = re.sub("<c{}>".format(i + 1), style.open, character)
-            character = re.sub("</c{}>".format(i + 1), style.close, character)
+            line = re.sub("<c{}>".format(i + 1), style.open, line)
+            line = re.sub("</c{}>".format(i + 1), style.close, line)
     elif font_colors == 1:
         try:
             color = colors[0]
@@ -138,12 +139,12 @@ def colorize(character, font_colors, colors):
         if color == COLORS.candy:
             color = random.choice(CANDYCOLORS.all())
         style = pen.style(color, False)
-        character = (
+        line = (
             style.open
-            + re.sub(r"(<([^>]+)>)", "", character)
+            + re.sub(r"</?c\d+>", "", line)
             + style.close
         )
-    return character
+    return line
 
 
 def render_console(
@@ -177,17 +178,62 @@ def render_console(
     return output
 
 
+def _find_left_most_non_space(line):
+    return min(i for i, c in enumerate(line) if c.strip() != '')
+
+
+def _find_right_most_non_space(line):
+    return max(i for i, c in enumerate(line) if c.strip() != '')
+
+
+def paint_gradient(
+    output, gradient, independent_gradient, lines, font_lines, line_height
+):
+    """Apply gradient colors to output"""
+    if independent_gradient:
+        buffer = []
+        start = 0
+        for _ in range(lines):
+            temp = output[start:start + font_lines]
+            add_line(
+                buffer,
+                paint_gradient(temp, gradient, False, 1, font_lines, 0),
+                line_height
+            )
+            start += font_lines + line_height
+        return buffer
+    gradient = gradient or []
+    output = [re.sub(r"</?c\d+>", "", line) for line in output]
+    min_index = min(map(_find_left_most_non_space, output))
+    max_index = max(map(_find_right_most_non_space, output))
+    styles = pen.get_gradient(gradient, max_index - min_index + 1)
+    new_output = []
+    for line in output:
+        if not line.strip():
+            new_output.append(line)
+            continue
+        temp = list(line)
+        for i, style in zip(range(min_index, max_index + 1), styles):
+            if not temp[i].strip():
+                continue
+            temp[i] = style.open + temp[i] + style.close
+        new_output.append("".join(temp))
+    return new_output
+
+
 def render(
     text,
     font=FONTFACES.block,
     size=SIZE,
-    colors=[],
+    colors=None,
     background=BGCOLORS.transparent,
     align="left",
     letter_spacing=None,
     line_height=1,
     space=True,
     max_length=0,
+    gradient=None,
+    independent_gradient=False,
 ):
     """Main function to get the colored output for a string.
 
@@ -201,11 +247,16 @@ def render(
     :param line_height: the height of each line
     :param space: whether to wrap the output with blank lines
     :param max_length: define the max length of per line, use 0 to disable
+    :param gradient: define the gradient color sequence
+    :param independent_gradient: whether to apply gradient to each line independently
     :returns: the colored output string
     """
-    output = []
-    lines = 0
     font_face = get_font(font)
+    colors = colors or []
+    if colors and colors[0] != "system" and gradient:
+        raise click.BadParameter(
+            "colors and gradient cannot be specified at the same time."
+        )
     if font == FONTFACES.console:
         # console fontface is pretty easy to process
         output = render_console(
@@ -218,13 +269,14 @@ def render(
         )
         lines = len(output)
     else:
+        lines = 0
         if letter_spacing is None:
             letter_spacing = char_length(font_face.letterspace)
         line_length = char_length(font_face.buffer)
         max_chars = 0
         output = add_line([], font_face.buffer, line_height)
         lines += 1
-        output = font_face.add_letter_spacing(output, colors, letter_spacing)
+        output = font_face.add_letter_spacing(output, letter_spacing)
         line_length += (
             char_length(font_face.letterspace, letter_spacing) * letter_spacing
         )
@@ -262,14 +314,19 @@ def render(
                     )
                 max_chars = 0
                 output = add_line(output, font_face.buffer, line_height)
-                output = font_face.add_letter_spacing(output, colors, letter_spacing)
+                output = font_face.add_letter_spacing(output, letter_spacing)
 
             if c != "|":
-                output = font_face.add_char(output, c, colors)
-                output = font_face.add_letter_spacing(output, colors, letter_spacing)
+                output = font_face.add_char(output, c)
+                output = font_face.add_letter_spacing(output, letter_spacing)
 
         output = align_text(output, line_length, font_face.lines, align, size)
+        if gradient:
+            output = paint_gradient(
+                output, gradient, independent_gradient, lines, font_face.lines, line_height
+            )
 
+    output = [colorize(line, font_face.colors, colors) for line in output]
     if space:
         # Blank lines at the beginning and end
         output = [""] * 2 + output + [""] * 2
@@ -279,20 +336,16 @@ def render(
         output = [(line + " " * (size[0] - len(_strip_color(line)))) for line in output]
         style = pen.style(background, True)
         if output:
-            output[0] = style.open+ output[0]
+            output[0] = style.open + output[0]
             output[-1] += style.close
-    write = "\n".join(output)
-    if font_face.colors <= 1:
-        write = colorize(write, font_face.colors, colors)
-
-    return write
+    return "\n".join(output)
 
 
 def say(text, **options):
     """Render and write the output to stout.
 
     :param text: the string you want to render
-    :param \**options: options passed as same as :func:`cfonts.render`
+    :param options: options passed as same as :func:`cfonts.render`
     :returns: None
     """
     write = render(text, **options)
@@ -301,5 +354,5 @@ def say(text, **options):
 
 
 def _strip_color(text):
-    REGEX = re.compile(r'\x1b\[\d+?m')
-    return REGEX.sub('', text)
+    regex = re.compile(r'\x1b\[\d+?m')
+    return regex.sub('', text)

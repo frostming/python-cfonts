@@ -52,6 +52,17 @@ from .core import say, render
     default=0,
     help="Use to define the amount of maximum characters per line",
 )
+@click.option(
+    "-g",
+    "--gradient",
+    help="Define gradient colors(separated by comma)",
+)
+@click.option(
+    "-i",
+    "--independent-gradient",
+    help="Set this option to re-calculate the gradient colors for each new line."
+    "Only works in combination with the gradient option."
+)
 @click.version_option(
     prog_name=render("cfonts", font="console", colors=["candy"], space=False)
 )
@@ -66,9 +77,13 @@ def cli(
     line_height,
     spaceless,
     max_length,
+    gradient,
+    independent_gradient
 ):
     """This is a tool for sexy fonts in the console. Give your cli some love."""
-    colors = colors.split(",")
+    colors = [c.strip() for c in colors.split(",")]
+    if gradient:
+        gradient = [g.strip() for g in gradient.split(",")]
     options = {
         "font": font,
         "colors": colors,
@@ -77,6 +92,8 @@ def cli(
         "line_height": line_height,
         "space": spaceless,
         "max_length": max_length,
+        "gradient": gradient,
+        "independent_gradient": independent_gradient
     }
     if letter_spacing is not None:
         options["letter_spacing"] = letter_spacing

@@ -128,7 +128,7 @@ class AnsiPen:
 
     def get_gradient(self, colors, steps):
         assert len(colors) >= 2, "At least 2 colors are needed for gradient."
-        colors = [_ensure_rgb(color.strip()) for color in colors.split(",")]
+        colors = [_ensure_rgb(color) for color in colors]
         color_steps = [(steps - 1) // (len(colors) - 1)] * (len(colors) - 1)
         if sum(color_steps) < (steps - 1):
             color_steps[-1] += 1
@@ -146,6 +146,8 @@ class AnsiPen:
             if result:
                 styles.pop(0)
             result.extend(self.rgb_style(c, False) for c in styles)
+            # The total length = (len(colors) - 1) * st
+            # where st = (steps - 1) / (len(colors) - 1)
         return result
 
 
@@ -155,12 +157,15 @@ class TrueColorPen(AnsiPen):
         close = self.BG_CLOSE_BIT if background else self.CLOSE_BIT
         r, g, b = color
         return Style(
-            "\x01\x1b[{};2;{};{};{}m\x02".format(open_bit, r, g, b),
+            "\x01\x1b[{};2;{};{};{}m".format(open_bit, r, g, b),
             close
         )
 
 
-if os.getenv("DISABLE_TRUECOLOR"):
+if (
+    os.getenv("DISABLE_TRUECOLOR") or os.name == "nt"
+) and not os.getenv("ENABLE_TRUECOLOR"):
+    # Disable truecolor for windows
     pen = AnsiPen()
 else:
     pen = TrueColorPen()
