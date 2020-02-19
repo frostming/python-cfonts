@@ -187,7 +187,7 @@ def _find_right_most_non_space(line):
 
 
 def paint_gradient(
-    output, gradient, independent_gradient, lines, font_lines, line_height
+    output, gradient, independent_gradient, lines, font_lines, line_height, transition
 ):
     """Apply gradient colors to output"""
     if independent_gradient:
@@ -204,9 +204,9 @@ def paint_gradient(
         return buffer
     gradient = gradient or []
     output = [re.sub(r"</?c\d+>", "", line) for line in output]
-    min_index = min(map(_find_left_most_non_space, output))
-    max_index = max(map(_find_right_most_non_space, output))
-    styles = pen.get_gradient(gradient, max_index - min_index + 1)
+    min_index = min(_find_left_most_non_space(line) for line in output if line.strip())
+    max_index = max(_find_right_most_non_space(line) for line in output if line.strip())
+    styles = pen.get_gradient(gradient, max_index - min_index + 1, transition)
     new_output = []
     for line in output:
         if not line.strip():
@@ -214,7 +214,7 @@ def paint_gradient(
             continue
         temp = list(line)
         for i, style in zip(range(min_index, max_index + 1), styles):
-            if not temp[i].strip():
+            if i >= len(temp) or not temp[i].strip():
                 continue
             temp[i] = style.open + temp[i] + style.close
         new_output.append("".join(temp))
@@ -234,6 +234,7 @@ def render(
     max_length=0,
     gradient=None,
     independent_gradient=False,
+    transition=False,
 ):
     """Main function to get the colored output for a string.
 
@@ -249,6 +250,7 @@ def render(
     :param max_length: define the max length of per line, use 0 to disable
     :param gradient: define the gradient color sequence
     :param independent_gradient: whether to apply gradient to each line independently
+    :param transition: If set to True, will generate transition gradient colors
     :returns: the colored output string
     """
     font_face = get_font(font)
@@ -323,7 +325,8 @@ def render(
         output = align_text(output, line_length, font_face.lines, align, size)
         if gradient:
             output = paint_gradient(
-                output, gradient, independent_gradient, lines, font_face.lines, line_height
+                output, gradient, independent_gradient, lines, font_face.lines,
+                line_height, transition
             )
 
     output = [colorize(line, font_face.colors, colors) for line in output]

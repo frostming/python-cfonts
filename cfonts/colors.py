@@ -99,6 +99,23 @@ def get_linear(start, end, steps):
     return [start + i * step for i in range(steps)]
 
 
+def get_interpolated_hsv(start_hsv, end_hsv, steps, transition=False):
+    """Get a sequence of HSV colors interpolated from start to end"""
+    if transition:
+        return zip(*[get_linear(s, e, steps) for s, e in zip(start_hsv, end_hsv)])
+    s_sequence = get_linear(start_hsv[1], end_hsv[1], steps)
+    v_sequence = get_linear(start_hsv[2], end_hsv[2], steps)
+    start_h, end_h = start_hsv[0], end_hsv[0]
+    diff = end_h - start_h
+    if diff < 0:
+        delta = diff if diff <= -180 else 360 + diff
+    else:
+        delta = diff if diff >= 180 else 360 - diff
+    delta = delta / (steps - 1)
+    h_sequence = [(start_h + i * delta) % 360 for i in range(steps)]
+    return zip(h_sequence, s_sequence, v_sequence)
+
+
 class AnsiPen:
     """Generate ANSI color styles"""
     CLOSE_BIT = '\x1b[39m'
@@ -126,8 +143,11 @@ class AnsiPen:
         ansi_color = get_closest(color)
         return self.ansi_style(ansi_color, background)
 
-    def get_gradient(self, colors, steps):
-        assert len(colors) >= 2, "At least 2 colors are needed for gradient."
+    def get_gradient(self, colors, steps, transition=False):
+        if transition and len(colors) < 2:
+            raise ValueError("Transition gradient needs at least two colors")
+        elif not transition and colors != 2:
+            raise ValueError("Gradient needs exactly two colors")
         colors = [_ensure_rgb(color) for color in colors]
         color_steps = [(steps - 1) // (len(colors) - 1)] * (len(colors) - 1)
         if sum(color_steps) < (steps - 1):
@@ -138,9 +158,7 @@ class AnsiPen:
             start_hsv, end_hsv = rgb_to_hsv(start), rgb_to_hsv(end)
             styles = [
                 hsv_to_rgb(hsv)
-                for hsv in zip(
-                    *[get_linear(s, e, st + 1) for s, e in zip(start_hsv, end_hsv)]
-                )
+                for hsv in get_interpolated_hsv(start_hsv, end_hsv, st + 1, transition)
             ]
             assert len(styles) == st + 1
             if result:
