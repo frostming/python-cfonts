@@ -11,6 +11,7 @@ from .consts import *  # noqa
 from .core import say, render
 
 
+@click.command()
 @click.option(
     "-f",
     "--font",
@@ -25,7 +26,6 @@ from .core import say, render
     "-b",
     "--background",
     default=BGCOLORS.transparent,
-    type=click.Choice(BGCOLORS.all()),
     help="Use to define the background color",
 )
 @click.option(
@@ -52,13 +52,10 @@ from .core import say, render
     default=0,
     help="Use to define the amount of maximum characters per line",
 )
-@click.argument("text", required=True)
 @click.version_option(
     prog_name=render("cfonts", font="console", colors=["candy"], space=False)
 )
-@click.command(
-    help="This is a tool for sexy fonts in the console. Give your cli some love."
-)
+@click.argument("text", required=True)
 def cli(
     text,
     font,
@@ -70,6 +67,7 @@ def cli(
     spaceless,
     max_length,
 ):
+    """This is a tool for sexy fonts in the console. Give your cli some love."""
     colors = colors.split(",")
     options = {
         "font": font,

@@ -1,6 +1,12 @@
 # -*- coding: utf-8 -*-
 """Test utility functions"""
+import pytest
+
 from cfonts.core import add_line, char_length, align_text, clean_input, colorize
+from cfonts.colors import (
+    get_closest, hex_to_rgb, AnsiPen, TrueColorPen, rgb_to_hex, rgb_to_hsv,
+    hsv_to_rgb
+)
 
 
 def test_add_line_single_font():
@@ -85,3 +91,58 @@ def test_colorize_candy_color(strip_color):
     text = colorize("<c1>text</c1>", 1, ["candy"])
     assert strip_color(text) == "text"
     assert len(text) > len("text")
+
+
+@pytest.mark.parametrize("hex_string,rgb", [
+    ("#111", (17, 17, 17)),
+    ("#51c7bd", (81,199,189))
+])
+def test_hex_to_rgb(hex_string, rgb):
+    assert hex_to_rgb(hex_string) == rgb
+
+
+@pytest.mark.parametrize("hex_string,target", [
+    ("#111", "black"),
+    ("#ff5f52", "bright_red")
+])
+def test_get_closest_color(hex_string, target):
+    assert get_closest(hex_to_rgb(hex_string)) == target
+
+
+@pytest.mark.parametrize("color,is_background,style", [
+    ("red", False, ("\x1b[31m", "\x1b[39m")),
+    ("red", True, ("\x1b[41m", "\x1b[49m")),
+    ("system", False, ("", ""))
+])
+def test_ansi_pen(color, is_background, style):
+    pen = AnsiPen()
+    assert pen.style(color, is_background) == style
+
+
+@pytest.mark.parametrize("color,is_background,style", [
+    ("#ff5f52", False, ("\x01\x1b[38;2;255;95;82m", "\x1b[39m")),
+    ("#ff5f52", True, ("\x01\x1b[48;2;255;95;82m", "\x1b[49m"))
+])
+def test_truecolor_pen(color, is_background, style):
+    pen = TrueColorPen()
+    assert pen.style(color, is_background) == style
+
+
+def test_color_conversion():
+    hex_string = "#51c7bd"
+    rgb = (81, 199, 189)
+    hsv = rgb_to_hsv(rgb)
+    assert hex_to_rgb(hex_string) == rgb
+    assert rgb_to_hex(rgb) == hex_string
+
+    assert rgb_to_hsv(rgb) == hsv
+    assert hsv_to_rgb(hsv) == rgb
+
+
+def test_generate_gradients():
+    pen = AnsiPen()
+    assert len(pen.get_gradient("red,green", 20)) == 20
+    assert len(pen.get_gradient("red,green", 23)) == 23
+
+    assert len(pen.get_gradient("red,yellow,green", 20)) == 20
+    assert len(pen.get_gradient("red,yellow,green", 23)) == 23

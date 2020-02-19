@@ -16,14 +16,11 @@ import re
 import click
 import colorama
 
-from .consts import (ALIGNMENT, ANSI_COLORS, BGCOLORS, CANDYCOLORS, CHARS,
+from .consts import (ALIGNMENT, BGCOLORS, CANDYCOLORS, CHARS,
                      COLORS, FONTFACES, SIZE)
+from .colors import pen
 
 colorama.init()
-ansi_styles = {"system": ("", "")}
-for k, v in ANSI_COLORS.items():
-    ansi_styles[k] = ("\x1b[{}m".format(v[0]), "\x1b[{}m".format(v[1]))
-    ansi_styles["bg" + k] = ("\x1b[{}m".format(v[0] + 10), "\x1b[{}m".format(v[1] + 10))
 
 
 class Font:
@@ -130,9 +127,9 @@ def colorize(character, font_colors, colors):
                 color = COLORS.system
             if color == COLORS.candy:
                 color = random.choice(CANDYCOLORS.all())
-
-            character = re.sub("<c{}>".format(i + 1), ansi_styles[color][0], character)
-            character = re.sub("</c{}>".format(i + 1), ansi_styles[color][1], character)
+            style = pen.style(color, False)
+            character = re.sub("<c{}>".format(i + 1), style.open, character)
+            character = re.sub("</c{}>".format(i + 1), style.close, character)
     elif font_colors == 1:
         try:
             color = colors[0]
@@ -140,10 +137,11 @@ def colorize(character, font_colors, colors):
             color = COLORS.system
         if color == COLORS.candy:
             color = random.choice(CANDYCOLORS.all())
+        style = pen.style(color, False)
         character = (
-            ansi_styles[color][0]
+            style.open
             + re.sub(r"(<([^>]+)>)", "", character)
-            + ansi_styles[color][1]
+            + style.close
         )
     return character
 
@@ -164,7 +162,7 @@ def render_console(
     while i < len(output_lines):
         line = output_lines[i]
         if len(line) > size[0]:
-            output_lines[i : i + 1] = line[: size[0]].strip(), line[size[0] :].strip()
+            output_lines[i: i + 1] = line[: size[0]].strip(), line[size[0]:].strip()
             line = output_lines[i]
         if len(colors) > 0 and colors[0] == COLORS.candy:
             output.append("".join(colorize(c, 1, colors) for c in line))
@@ -242,8 +240,7 @@ def render(
                 )
 
             if (
-                max_chars > max_length
-                and max_length != 0
+                max_chars > max_length != 0
                 or c == "|"
                 or line_length > size[0]
             ):
@@ -280,10 +277,10 @@ def render(
         # Fill whitespaces to the full width.
         # See https://github.com/frostming/python-cfonts/issues/3
         output = [(line + " " * (size[0] - len(_strip_color(line)))) for line in output]
-        bg_color = "bg" + background
+        style = pen.style(background, True)
         if output:
-            output[0] = ansi_styles[bg_color][0] + output[0]
-            output[-1] += ansi_styles[bg_color][1]
+            output[0] = style.open+ output[0]
+            output[-1] += style.close
     write = "\n".join(output)
     if font_face.colors <= 1:
         write = colorize(write, font_face.colors, colors)
