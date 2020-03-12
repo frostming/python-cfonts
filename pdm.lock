@@ -51,13 +51,6 @@ marker = "python_version >= \"2.7\" and python_version not in \"3.0, 3.1, 3.2, 3
 summary = "Universal encoding detector for Python 2 and 3"
 
 [[package]]
-name = "click"
-sections = ["default"]
-version = "7.0"
-marker = "python_version >= \"2.7\" and python_version not in \"3.0, 3.1, 3.2, 3.3\""
-summary = "Composable command line interface toolkit"
-
-[[package]]
 name = "colorama"
 sections = ["default", "dev"]
 version = "0.4.3"
@@ -68,14 +61,14 @@ summary = "Cross-platform colored terminal text."
 name = "configparser"
 sections = ["dev"]
 version = "4.0.2"
-marker = "python_version >= \"2.7\" and python_version < \"3.2\""
+marker = "python_version >= \"2.7\" and python_version < \"3.0\""
 summary = "Updated configparser from Python 3.7 for Python 2.6+."
 
 [[package]]
 name = "contextlib2"
 sections = ["dev"]
 version = "0.6.0.post1"
-marker = "python_version >= \"2.7\" and python_version < \"3.4\""
+marker = "python_version >= \"2.7\" and python_version < \"3.0\""
 summary = "Backports and enhancements for the contextlib module"
 
 [[package]]
@@ -99,7 +92,7 @@ configparser = {marker = "python_version == \"2.7\"", version = ">=3.5"}
 name = "enum34"
 sections = ["dev"]
 version = "1.1.6"
-marker = "python_version >= \"2.7\" and python_version < \"3.4\" and python_version not in \"3.0, 3.1, 3.2, 3.3\""
+marker = "python_version >= \"2.7\" and python_version < \"3.0\""
 summary = "Python 3.4 Enum backported to 3.3, 3.2, 3.1, 2.7, 2.6, 2.5, and 2.4"
 
 [[package]]
@@ -130,7 +123,7 @@ summary = "Python function signatures from PEP362 for Python 2.6, 2.7 and 3.2+"
 name = "functools32"
 sections = ["dev"]
 version = "3.2.3.post2"
-marker = "python_version >= \"2.7\" and python_version < \"3.2\" and python_version not in \"3.0, 3.1\""
+marker = "python_version >= \"2.7\" and python_version < \"3.0\""
 summary = "Backport of the functools module from Python 3.2.3 for use on 2.7 and PyPy."
 
 [[package]]
@@ -215,12 +208,6 @@ summary = "Object-oriented filesystem paths"
 [package.dependencies]
 six = "*"
 scandir = {marker = "python_version < \"3.5\"", version = "*"}
-
-[[package]]
-name = "pbr"
-sections = ["dev"]
-version = "5.4.4"
-summary = "Python Build Reasonableness"
 
 [[package]]
 name = "pluggy"
@@ -360,16 +347,6 @@ typing = {marker = "python_version < \"3.5\"", version = "*"}
 colorama = {marker = "sys_platform == \"win32\"", version = ">=0.3.5"}
 
 [[package]]
-name = "sphinx-click"
-sections = ["dev"]
-version = "2.3.1"
-summary = "Sphinx extension that automatically documents click applications"
-
-[package.dependencies]
-pbr = ">=2.0"
-sphinx = "<3.0,>=1.5"
-
-[[package]]
 name = "sphinxcontrib-websupport"
 sections = ["dev"]
 version = "1.1.2"
@@ -436,10 +413,6 @@ contextlib2 = {marker = "python_version < \"3.4\"", version = "*"}
     {file = "chardet-3.0.4-py2.py3-none-any.whl", hash = "sha256:fc323ffcaeaed0e0a02bf4d117757b98aed530d9ed4531e3e15460124c106691"},
     {file = "chardet-3.0.4.tar.gz", hash = "sha256:84ab92ed1c4d4f16916e05906b6b75a6c0fb5db821cc65e70cbd64a3e2a5eaae"},
 ]
-"click 7.0" = [
-    {file = "Click-7.0-py2.py3-none-any.whl", hash = "sha256:2335065e6395b9e67ca716de5f7526736bfa6ceead690adf616d925bdc622b13"},
-    {file = "Click-7.0.tar.gz", hash = "sha256:5b94b49521f6456670fdb30cd82a4eca9412788a93fa6dd6df72c94d5a8ff2d7"},
-]
 "colorama 0.4.3" = [
     {file = "colorama-0.4.3-py2.py3-none-any.whl", hash = "sha256:7d73d2a99753107a36ac6b455ee49046802e59d9d076ef8e47b61499fa29afff"},
     {file = "colorama-0.4.3.tar.gz", hash = "sha256:e96da0d330793e2cb9485e9ddfd918d456036c7149416295932478192f4436a1"},
@@ -491,10 +464,11 @@ contextlib2 = {marker = "python_version < \"3.4\"", version = "*"}
     {file = "importlib_metadata-1.5.0.tar.gz", hash = "sha256:06f5b3a99029c7134207dd882428a66992a9de2bef7c2b699b5641f9886c3302"},
 ]
 "jinja2 2.11.1" = [
-    {file = "Jinja2-2.11.1-py2.py3-none-any.whl", hash = "sha256:b0eaf100007721b5c16c1fc1eecb87409464edc10469ddc9a22a27a99123be49"},
     {file = "Jinja2-2.11.1.tar.gz", hash = "sha256:93187ffbc7808079673ef52771baa950426fd664d3aad1d0fa3e95644360e250"},
+    {file = "Jinja2-2.11.1-py2.py3-none-any.whl", hash = "sha256:b0eaf100007721b5c16c1fc1eecb87409464edc10469ddc9a22a27a99123be49"},
 ]
 "markupsafe 1.1.1" = [
+    {file = "MarkupSafe-1.1.1.tar.gz", hash = "sha256:29872e92839765e546828bb7754a68c418d927cd064fd4708fab9fe9c8bb116b"},
     {file = "MarkupSafe-1.1.1-cp27-cp27m-macosx_10_6_intel.whl", hash = "sha256:09027a7803a62ca78792ad89403b1b7a73a01c8cb65909cd876f7fcebd79b161"},
     {file = "MarkupSafe-1.1.1-cp27-cp27m-manylinux1_i686.whl", hash = "sha256:e249096428b3ae81b08327a63a485ad0878de3fb939049038579ac0ef61e17e7"},
     {file = "MarkupSafe-1.1.1-cp27-cp27m-manylinux1_x86_64.whl", hash = "sha256:500d4957e52ddc3351cabf489e79c91c17f6e0899158447047588650b5e69183"},
@@ -527,7 +501,6 @@ contextlib2 = {marker = "python_version < \"3.4\"", version = "*"}
     {file = "MarkupSafe-1.1.1-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:13d3144e1e340870b25e7b10b98d779608c02016d5184cfb9927a9f10c689f42"},
     {file = "MarkupSafe-1.1.1-cp38-cp38-win32.whl", hash = "sha256:596510de112c685489095da617b5bcbbac7dd6384aeebeda4df6025d0256a81b"},
     {file = "MarkupSafe-1.1.1-cp38-cp38-win_amd64.whl", hash = "sha256:e8313f01ba26fbbe36c7be1966a7b7424942f670f38e666995b88d012765b9be"},
-    {file = "MarkupSafe-1.1.1.tar.gz", hash = "sha256:29872e92839765e546828bb7754a68c418d927cd064fd4708fab9fe9c8bb116b"},
 ]
 "mccabe 0.6.1" = [
     {file = "mccabe-0.6.1-py2.py3-none-any.whl", hash = "sha256:ab8a6258860da4b6677da4bd2fe5dc2c659cff31b3ee4f7f5d64e79735b80d42"},
@@ -546,10 +519,6 @@ contextlib2 = {marker = "python_version < \"3.4\"", version = "*"}
     {file = "pathlib2-2.3.5-py2.py3-none-any.whl", hash = "sha256:0ec8205a157c80d7acc301c0b18fbd5d44fe655968f5d947b6ecef5290fc35db"},
     {file = "pathlib2-2.3.5.tar.gz", hash = "sha256:6cd9a47b597b37cc57de1c05e56fb1a1c9cc9fab04fe78c29acd090418529868"},
 ]
-"pbr 5.4.4" = [
-    {file = "pbr-5.4.4-py2.py3-none-any.whl", hash = "sha256:61aa52a0f18b71c5cc58232d2cf8f8d09cd67fcad60b742a60124cb8d6951488"},
-    {file = "pbr-5.4.4.tar.gz", hash = "sha256:139d2625547dbfa5fb0b81daebb39601c478c21956dc57e2e07b74450a8c506b"},
-]
 "pluggy 0.13.1" = [
     {file = "pluggy-0.13.1-py2.py3-none-any.whl", hash = "sha256:966c145cd83c96502c3c3868f50408687b38434af77734af1e9ca461a4081d2d"},
     {file = "pluggy-0.13.1.tar.gz", hash = "sha256:15b2acde666561e1298d71b523007ed7364de07029219b604cf808bfa1c765b0"},
@@ -567,8 +536,8 @@ contextlib2 = {marker = "python_version < \"3.4\"", version = "*"}
     {file = "pyflakes-2.1.1.tar.gz", hash = "sha256:d976835886f8c5b31d47970ed689944a0262b5f3afa00a5a7b4dc81e5449f8a2"},
 ]
 "pygments 2.5.2" = [
-    {file = "Pygments-2.5.2-py2.py3-none-any.whl", hash = "sha256:2a3fe295e54a20164a9df49c75fa58526d3be48e14aceba6d6b1e8ac0bfd6f1b"},
     {file = "Pygments-2.5.2.tar.gz", hash = "sha256:98c8aa5a9f778fcd1026a17361ddaf7330d1b7c62ae97c3bb0ae73e0b9b6b0fe"},
+    {file = "Pygments-2.5.2-py2.py3-none-any.whl", hash = "sha256:2a3fe295e54a20164a9df49c75fa58526d3be48e14aceba6d6b1e8ac0bfd6f1b"},
 ]
 "pyparsing 2.4.6" = [
     {file = "pyparsing-2.4.6-py2.py3-none-any.whl", hash = "sha256:c342dccb5250c08d45fd6f8b4a559613ca603b57498511740e65cd11a2e7dcec"},
@@ -615,10 +584,6 @@ contextlib2 = {marker = "python_version < \"3.4\"", version = "*"}
     {file = "Sphinx-1.8.5-py2.py3-none-any.whl", hash = "sha256:9f3e17c64b34afc653d7c5ec95766e03043cc6d80b0de224f59b6b6e19d37c3c"},
     {file = "Sphinx-1.8.5.tar.gz", hash = "sha256:c7658aab75c920288a8cf6f09f244c6cfdae30d82d803ac1634d9f223a80ca08"},
 ]
-"sphinx-click 2.3.1" = [
-    {file = "sphinx-click-2.3.1.tar.gz", hash = "sha256:793c68b41c4a9435f953e2a27f9bf5883729037b7431f32b2776257c2966bd1b"},
-    {file = "sphinx_click-2.3.1-py2.py3-none-any.whl", hash = "sha256:8c6274666730686a65efbae0b4465879b030372333de3114aeb63c44204da32e"},
-]
 "sphinxcontrib-websupport 1.1.2" = [
     {file = "sphinxcontrib-websupport-1.1.2.tar.gz", hash = "sha256:1501befb0fdf1d1c29a800fdbf4ef5dc5369377300ddbdd16d2cd40e54c6eefc"},
     {file = "sphinxcontrib_websupport-1.1.2-py2.py3-none-any.whl", hash = "sha256:e02f717baf02d0b6c3dd62cf81232ffca4c9d5c331e03766982e3ff9f1d2bc3f"},
@@ -642,10 +607,5 @@ contextlib2 = {marker = "python_version < \"3.4\"", version = "*"}
 ]
 
 [root]
-content_hash = "md5:7fc650b40a6980bb8743a30874419a6a"
+content_hash = "md5:b0a0beb8175170d675b1aa7407a27b60"
 meta_version = "0.0.1"
-
-[[root.source]]
-name = "pypi"
-url = "https://pypi.org/simple"
-verify_ssl = true
