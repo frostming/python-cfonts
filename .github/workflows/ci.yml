@@ -19,7 +19,7 @@ jobs:
       - name: Linting
         run: |
           pip install flake8
-          flake8 cfonts
+          flake8 --ignore=W,E203,F405 --max-line-length=88 cfonts tests
   Testing:
     needs: Linting
     runs-on: ${{ matrix.os }}
