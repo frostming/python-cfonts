@@ -6,7 +6,7 @@
  ╚██████╗ ██║      ╚██████╔╝ ██║ ╚████║    ██║    ███████║
   ╚═════╝ ╚═╝       ╚═════╝  ╚═╝  ╚═══╝    ╚═╝    ╚══════╝
 ```
-[![Build Status](https://travis-ci.org/frostming/python-cfonts.svg?branch=master)](https://travis-ci.org/frostming/python-cfonts)
+![Tests](https://github.com/frostming/python-cfonts/workflows/Tests/badge.svg)
 
 *This is a Python port of [cfonts](https://github.com/dominikwilkowski/cfonts). Thanks for the original code and beautiful console fonts!*
 
