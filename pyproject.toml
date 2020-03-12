@@ -36,6 +36,7 @@ colorama = "*"
 
 [tool.pdm.dev-dependencies]
 pytest = "*"
+more-itertools = ">=4.0.0,<6.0.0"
 flake8 = "*"
 sphinx = "*"
 
