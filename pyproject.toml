@@ -31,7 +31,6 @@ classifiers = [
 Documentation = "https://python-cfonts.readthedocs.io/"
 
 [tool.pdm.dependencies]
-click = "*"
 colorama = "*"
 "backports.shutil_get_terminal_size" = {marker = "python_version < \"3.4\"", version = "*"}
 
@@ -39,7 +38,6 @@ colorama = "*"
 pytest = "*"
 flake8 = "*"
 sphinx = "*"
-sphinx-click = "*"
 
 [tool.pdm.cli]
-cfonts = "cfonts.cli:cli"
+cfonts = "cfonts.cli:main"

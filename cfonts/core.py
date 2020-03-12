@@ -8,12 +8,12 @@
 """
 from __future__ import unicode_literals
 
+import argparse
 import json
 import pkgutil
 import random
 import re
 
-import click
 import colorama
 
 from .consts import ALIGNMENT, BGCOLORS, CANDYCOLORS, CHARS, COLORS, FONTFACES, SIZE
@@ -250,7 +250,7 @@ def render(
     font_face = get_font(font)
     colors = colors or []
     if colors and colors[0] != "system" and gradient:
-        raise click.BadParameter(
+        raise argparse.ArgumentError(
             "colors and gradient cannot be specified at the same time."
         )
     if font == FONTFACES.console:
@@ -348,7 +348,7 @@ def say(text, **options):
     """
     write = render(text, **options)
     if write:
-        click.echo(write)
+        print(write)
 
 
 def _strip_color(text):

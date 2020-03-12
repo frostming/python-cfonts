@@ -37,8 +37,47 @@ Or alternatively, install using Pip::
 Command Line Interface
 ----------------------
 
-.. click:: cfonts.cli:cli
-    :prog: cfonts
+```
+usage: cfonts [-h] [-V]
+              [-f {console,block,simpleBlock,simple,3d,simple3d,chrome,huge,grid,pallet,shade,slick}]
+              [-c COLORS] [-b BACKGROUND] [-a {left,center,right}]
+              [-l LETTER_SPACING] [-z LINE_HEIGHT] [-s] [-m MAX_LENGTH]
+              [-g GRADIENT] [-i] [-t]
+              text
+
+positional arguments:
+  text
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -V, --version         show program's version number and exit
+  -f {console,block,simpleBlock,simple,3d,simple3d,chrome,huge,grid,pallet,shade,slick}, --font {console,block,simpleBlock,simple,3d,simple3d,chrome,huge,grid,pallet,shade,slick}
+                        Use to define the font face
+  -c COLORS, --colors COLORS
+                        Use to define the font color
+  -b BACKGROUND, --background BACKGROUND
+                        Use to define the background color
+  -a {left,center,right}, --align {left,center,right}
+                        Use to align the text output
+  -l LETTER_SPACING, --letter-spacing LETTER_SPACING
+                        Use to define the letter spacing
+  -z LINE_HEIGHT, --line-height LINE_HEIGHT
+                        Use to define the line height
+  -s, --spaceless       Use to define the background color
+  -m MAX_LENGTH, --max-length MAX_LENGTH
+                        Use to define the amount of maximum characters per
+                        line
+  -g GRADIENT, --gradient GRADIENT
+                        Define gradient colors(separated by comma)
+  -i, --independent-gradient
+                        Set this option to re-calculate the gradient colors
+                        for each new line.Only works in combination with the
+                        gradient option.
+  -t, --transition-gradient
+                        Set this option to generate your own gradients. Each
+                        color set in the gradient option will then be
+                        transitioned to directly.
+```
 
 Examples
 ++++++++
