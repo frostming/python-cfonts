@@ -44,7 +44,7 @@ jobs:
         run: |
           pdm use -f ${{ matrix.python-version }}
           pip install wheel
-          pdm install -d
+          pdm install -dv
       - name: Run Tests
         run: |
           pdm run pytest tests
