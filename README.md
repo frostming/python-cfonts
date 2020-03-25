@@ -23,27 +23,45 @@ $ pip install python-cfonts
 
 Command line interface:
 ```bash
-$ cfonts --help
-Usage: cfonts [OPTIONS] TEXT
+usage: cfonts [-h] [-V]
+              [-f {console,block,simpleBlock,simple,3d,simple3d,chrome,huge,grid,pallet,shade,slick}]
+              [-c COLORS] [-b BACKGROUND] [-a {left,center,right}]
+              [-l LETTER_SPACING] [-z LINE_HEIGHT] [-s] [-m MAX_LENGTH]
+              [-g GRADIENT] [-i] [-t]
+              text
 
-  This is a tool for sexy fonts in the console. Give your cli some love.
+positional arguments:
+  text
 
-Options:
-  --version                       Show the version and exit.
-  -m, --max-length INTEGER        Use to define the amount of maximum
-                                  characters per line
-  -s, --spaceless                 Use to disable the padding around your
-                                  output
-  -z, --line-height INTEGER       Use to define your line height
-  -l, --letter-spacing INTEGER    Use to define your letter spacing
-  -a, --align [left|center|right]
-                                  Use to align your text output
-  -b, --background [transparent|black|red|green|yellow|blue|magenta|cyan|white|bright_black|bright_red|bright_green|bright_yellow|bright_blue|bright_magenta|bright_cyan|bright_white]
-                                  Use to define the background color
-  -c, --colors TEXT               Use to define the font color
-  -f, --font [console|block|simpleBlock|simple|3d|simple3d|chrome|huge]
-                                  Use to define the font face
-  --help                          Show this message and exit.
+optional arguments:
+  -h, --help            show this help message and exit
+  -V, --version         show program's version number and exit
+  -f {console,block,simpleBlock,simple,3d,simple3d,chrome,huge,grid,pallet,shade,slick}, --font {console,block,simpleBlock,simple,3d,simple3d,chrome,huge,grid,pallet,shade,slick}
+                        Use to define the font face
+  -c COLORS, --colors COLORS
+                        Use to define the font color
+  -b BACKGROUND, --background BACKGROUND
+                        Use to define the background color
+  -a {left,center,right}, --align {left,center,right}
+                        Use to align the text output
+  -l LETTER_SPACING, --letter-spacing LETTER_SPACING
+                        Use to define the letter spacing
+  -z LINE_HEIGHT, --line-height LINE_HEIGHT
+                        Use to define the line height
+  -s, --spaceless       Use to define the background color
+  -m MAX_LENGTH, --max-length MAX_LENGTH
+                        Use to define the amount of maximum characters per
+                        line
+  -g GRADIENT, --gradient GRADIENT
+                        Define gradient colors(separated by comma)
+  -i, --independent-gradient
+                        Set this option to re-calculate the gradient colors
+                        for each new line.Only works in combination with the
+                        gradient option.
+  -t, --transition-gradient
+                        Set this option to generate your own gradients. Each
+                        color set in the gradient option will then be
+                        transitioned to directly.
 ```
 ![](https://python-cfonts.readthedocs.io/en/latest/_images/example.png)
 
@@ -97,6 +115,7 @@ Ported by [@frostming](https://github.com/frostming), under GPLv2 license. See [
 
 ## Changelog
 
+- **v1.2.0** Add font `tiny`.
 - **v1.1.0** Switch to `argparse` to drop dependency `click`.
 - **v1.0.0** Support gradient colors and transition gradient.
 - **v0.5.0** Add four new fonts and double quote as supported charater.
