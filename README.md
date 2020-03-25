@@ -19,7 +19,7 @@ $ pip install python-cfonts
 ```
 
 ## Usage
-[Documentation](https://python-cfonts.readthedocs.io/python-cfonts/)
+[Documentation](https://python-cfonts.fming.dev/)
 
 Command line interface:
 ```bash
@@ -63,7 +63,7 @@ optional arguments:
                         color set in the gradient option will then be
                         transitioned to directly.
 ```
-![](https://python-cfonts.readthedocs.io/en/latest/_images/example.png)
+![](https://python-cfonts.fming.dev/_images/example.png)
 
 Or generate the fonts pragramatically:
 
