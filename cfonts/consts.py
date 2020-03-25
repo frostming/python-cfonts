@@ -95,6 +95,7 @@ class FONTFACES(Enum):
     pallet = "pallet"
     shade = "shade"
     slick = "slick"
+    tiny = "tiny"
 
 
 ANSI_COLORS = {
