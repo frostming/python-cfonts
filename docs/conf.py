@@ -12,9 +12,11 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 import os
+import sys
 
 here = os.path.dirname(__file__)
 about = {}
+sys.path.insert(0, os.path.join(here, os.pardir))
 with open(os.path.join(here, "..", "cfonts", "__version__.py")) as f:
     exec(f.read(), about)
 
