@@ -37,7 +37,7 @@ Or alternatively, install using Pip::
 Command Line Interface
 ----------------------
 
-.. code-block::
+::
 
     usage: cfonts [-h] [-V]
                   [-f {console,block,simpleBlock,simple,3d,simple3d,chrome,huge,grid,pallet,shade,slick}]
