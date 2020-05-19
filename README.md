@@ -6,9 +6,10 @@
  ╚██████╗ ██║      ╚██████╔╝ ██║ ╚████║    ██║    ███████║
   ╚═════╝ ╚═╝       ╚═════╝  ╚═╝  ╚═══╝    ╚═╝    ╚══════╝
 ```
+
 ![Tests](https://github.com/frostming/python-cfonts/workflows/Tests/badge.svg)
 
-*This is a Python port of [cfonts](https://github.com/dominikwilkowski/cfonts). Thanks for the original code and beautiful console fonts!*
+_This is a Python port of [cfonts](https://github.com/dominikwilkowski/cfonts). Thanks for the original code and beautiful console fonts!_
 
 > **NOTE:** This project supports Python 2.7+ and 3.5+
 
@@ -19,9 +20,11 @@ $ pip install python-cfonts
 ```
 
 ## Usage
+
 [Documentation](https://python-cfonts.fming.dev/)
 
 Command line interface:
+
 ```bash
 usage: cfonts [-h] [-V]
               [-f {console,block,simpleBlock,simple,3d,simple3d,chrome,huge,grid,pallet,shade,slick}]
@@ -63,6 +66,7 @@ optional arguments:
                         color set in the gradient option will then be
                         transitioned to directly.
 ```
+
 ![](https://python-cfonts.fming.dev/_images/example.png)
 
 Or generate the fonts pragramatically:
@@ -73,37 +77,43 @@ from cfonts import render, say
 output = render('Hello world', colors=['red', 'yellow'], align='center')
 print(output)
 ```
+
 ## Supported Characters
 
-|     |     |     |     |             |
-|-----|-----|-----|-----|-------------|
-| `A` | `O` | `2` | `2` | `=`         |
-| `B` | `P` | `3` | `3` | `@`         |
-| `C` | `Q` | `4` | `4` | `#`         |
-| `D` | `R` | `5` | `5` | `$`         |
-| `E` | `S` | `6` | `6` | `%`         |
-| `F` | `T` | `7` | `7` | `&`         |
-| `G` | `U` | `8` | `8` | `(`         |
-| `H` | `V` | `9` | `9` | `)`         |
-| `I` | `W` | `!` | `!` | `/`         |
-| `J` | `X` | `?` | `?` | `:`         |
-| `K` | `Y` | `.` | `.` | `;`         |
-| `L` | `Z` | `+` | `+` | `,`         |
-| `M` | `0` | `-` | `-` | `'`         |
-| `N` | `1` | `_` | `_` | ` ` (space) |
+|     |     |     |     |            |
+| --- | --- | --- | --- | ---------- |
+| `A` | `O` | `2` | `2` | `=`        |
+| `B` | `P` | `3` | `3` | `@`        |
+| `C` | `Q` | `4` | `4` | `#`        |
+| `D` | `R` | `5` | `5` | `$`        |
+| `E` | `S` | `6` | `6` | `%`        |
+| `F` | `T` | `7` | `7` | `&`        |
+| `G` | `U` | `8` | `8` | `(`        |
+| `H` | `V` | `9` | `9` | `)`        |
+| `I` | `W` | `!` | `!` | `/`        |
+| `J` | `X` | `?` | `?` | `:`        |
+| `K` | `Y` | `.` | `.` | `;`        |
+| `L` | `Z` | `+` | `+` | `,`        |
+| `M` | `0` | `-` | `-` | `'`        |
+| `N` | `1` | `_` | `_` | `` (space) |
 | `"` |
 
 ## Contributing
 
 `python-cfonts` is managed by [pdm](https://github.com/frostming/pdm), first install it:
+
 ```bash
 pipx install pdm
 ```
+
 Then, install a dependencies:
+
 ```bash
 pdm install -d
 ```
+
 Run tests:
+
 ```bash
 $ pdm run pytest tests
 ```
@@ -111,10 +121,11 @@ $ pdm run pytest tests
 ## License
 
 The project is originated by [@dominikwilkowski](https://github.com/dominikwilkowski), under GPLv2 license.
-Ported by [@frostming](https://github.com/frostming), under GPLv2 license. See [LICENSE](/LICENSE) for details
+Ported by [@frostming](https://github.com/frostming), under MIT license. See [LICENSE](/LICENSE) for details
 
 ## Changelog
 
+- **v1.3.0** Relicense to MIT.
 - **v1.2.0** Add font `tiny`.
 - **v1.1.0** Switch to `argparse` to drop dependency `click`.
 - **v1.0.0** Support gradient colors and transition gradient.

@@ -9,9 +9,6 @@ CFonts: Sexy fonts for the console
 .. image:: https://img.shields.io/pypi/v/python-cfonts.svg
     :target: https://pypi.python.org/pypi/python-cfonts
 
-.. image:: https://img.shields.io/pypi/l/python-cfonts.svg
-    :target: https://pypi.python.org/pypi/python-cfonts
-
 .. image:: https://img.shields.io/pypi/pyversions/python-cfonts.svg
     :target: https://pypi.python.org/pypi/python-cfonts
 
