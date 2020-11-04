@@ -25,7 +25,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        python-version: [2.7, 3.5, 3.6, 3.7, 3.8]
+        python-version: [2.7, 3.5, 3.6, 3.7, 3.8, 3.9]
         os: [ubuntu-latest, macOS-latest, windows-latest]
 
     steps:
@@ -43,7 +43,7 @@ jobs:
       - name: Install dependencies
         run: |
           pdm use -f ${{ matrix.python-version }}
-          pdm config set parallel_install false
+          pdm config parallel_install false
           pip install wheel
           pdm install -d
       - name: Run Tests
