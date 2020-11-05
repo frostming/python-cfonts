@@ -125,6 +125,7 @@ Ported by [@frostming](https://github.com/frostming), under MIT license. See [LI
 
 ## Changelog
 
+- **v1.3.1** Fix the sdist.
 - **v1.3.0** Relicense to MIT.
 - **v1.2.0** Add font `tiny`.
 - **v1.1.0** Switch to `argparse` to drop dependency `click`.
