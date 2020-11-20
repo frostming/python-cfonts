@@ -110,7 +110,7 @@ def main():
 
     colors = [c.strip() for c in args.colors.split(",")]
     if args.gradient:
-        gradient = [g.strip() for g in args.split(",")]
+        gradient = [g.strip() for g in args.gradient.split(",")]
     else:
         gradient = None
     options = {
