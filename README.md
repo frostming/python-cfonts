@@ -11,7 +11,7 @@
 
 _This is a Python port of [cfonts](https://github.com/dominikwilkowski/cfonts). Thanks for the original code and beautiful console fonts!_
 
-> **NOTE:** This project supports Python 2.7+ and 3.5+
+> **NOTE:** This project supports Python 2.7+ and 3.6+
 
 ## Installation
 
@@ -125,6 +125,7 @@ Ported by [@frostming](https://github.com/frostming), under MIT license. See [LI
 
 ## Changelog
 
+- **v1.4.0** Officially drop support of Python 3.5
 - **v1.3.1** Fix the sdist.
 - **v1.3.0** Relicense to MIT.
 - **v1.2.0** Add font `tiny`.
