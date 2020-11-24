@@ -43,8 +43,7 @@ jobs:
       - name: Install dependencies
         run: |
           pdm use -f ${{ matrix.python-version }}
-          pdm config parallel_install false
-          pip install wheel
+          pip install wheel setuptools
           pdm install -d
       - name: Run Tests
         run: |
