@@ -1,6 +1,6 @@
 install:
 	pip install --upgrade pdm wheel
-	pdm sync -g . -d
+	pdm sync -gp .
 
 docs:
 	pdm || $(MAKE) install

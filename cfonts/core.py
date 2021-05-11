@@ -6,8 +6,6 @@
     :license: GNU GPLv2
     :author: Frost Ming<mianghong@gmail.com>
 """
-from __future__ import unicode_literals
-
 import argparse
 import json
 import pkgutil
@@ -354,4 +352,3 @@ def say(text, **options):
 def _strip_color(text):
     regex = re.compile(r"\x1b\[\d+?m")
     return regex.sub("", text)
-

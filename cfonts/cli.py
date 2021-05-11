@@ -15,20 +15,18 @@ from .__version__ import __version__
 
 
 class CFontsArgumentParser(argparse.ArgumentParser):
-
     def format_help(self) -> str:
         formatter = self._get_formatter()
 
         # description
         formatter._add_item(
             lambda x: x,
-            [render("cfonts", gradient=["red", "green"], space=False) + "\n"]
+            [render("cfonts", gradient=["red", "green"], space=False) + "\n"],
         )
         formatter.add_text(self.description)
 
         # usage
-        formatter.add_usage(self.usage, self._actions,
-                            self._mutually_exclusive_groups)
+        formatter.add_usage(self.usage, self._actions, self._mutually_exclusive_groups)
 
         # positionals, optionals and user-defined groups
         for action_group in self._action_groups:
@@ -48,29 +46,54 @@ def parse_args():
     parser = CFontsArgumentParser(
         "cfonts",
         description="This is a tool for sexy fonts in the console. "
-                    "Give your cli some love."
+        "Give your cli some love.",
     )
     parser.add_argument(
-        "-V", "--version", action="version", version="{} {}".format(
+        "-V",
+        "--version",
+        action="version",
+        version="{} {}".format(
             render("cfonts", font="console", colors=["candy"], space=False), __version__
-        )
+        ),
     )
 
-    parser.add_argument("-f", "--font", default=FONTFACES.block,
-                        choices=FONTFACES.all(), help="Use to define the font face")
-    parser.add_argument("-c", "--colors", default=COLORS.system,
-                        help="Use to define the font color")
-    parser.add_argument("-b", "--background", default=BGCOLORS.transparent,
-                        help="Use to define the background color")
-    parser.add_argument("-a", "--align", default="left",
-                        choices=ALIGNMENT, help="Use to align the text output")
-    parser.add_argument("-l", "--letter-spacing", type=int,
-                        help="Use to define the letter spacing")
-    parser.add_argument("-z", "--line-height", default=1,
-                        help="Use to define the line height")
-    parser.add_argument("-s", "--spaceless", dest="space", default=True,
-                        action="store_false",
-                        help="Use to define the background color")
+    parser.add_argument(
+        "-f",
+        "--font",
+        default=FONTFACES.block,
+        choices=FONTFACES.all(),
+        help="Use to define the font face",
+    )
+    parser.add_argument(
+        "-c", "--colors", default=COLORS.system, help="Use to define the font color"
+    )
+    parser.add_argument(
+        "-b",
+        "--background",
+        default=BGCOLORS.transparent,
+        help="Use to define the background color",
+    )
+    parser.add_argument(
+        "-a",
+        "--align",
+        default="left",
+        choices=ALIGNMENT,
+        help="Use to align the text output",
+    )
+    parser.add_argument(
+        "-l", "--letter-spacing", type=int, help="Use to define the letter spacing"
+    )
+    parser.add_argument(
+        "-z", "--line-height", default=1, help="Use to define the line height"
+    )
+    parser.add_argument(
+        "-s",
+        "--spaceless",
+        dest="space",
+        default=True,
+        action="store_false",
+        help="Use to define the background color",
+    )
 
     parser.add_argument(
         "-m",
@@ -79,14 +102,16 @@ def parse_args():
         help="Use to define the amount of maximum characters per line",
     )
     parser.add_argument(
-        "-g", "--gradient", help="Define gradient colors(separated by comma)",
+        "-g",
+        "--gradient",
+        help="Define gradient colors(separated by comma)",
     )
     parser.add_argument(
         "-i",
         "--independent-gradient",
         action="store_true",
         help="Set this option to re-calculate the gradient colors for each new line."
-             "Only works in combination with the gradient option.",
+        "Only works in combination with the gradient option.",
     )
     parser.add_argument(
         "-t",
@@ -94,7 +119,7 @@ def parse_args():
         dest="transition",
         action="store_true",
         help="Set this option to generate your own gradients. Each color set "
-             "in the gradient option will then be transitioned to directly.",
+        "in the gradient option will then be transitioned to directly.",
     )
     parser.add_argument("text")
     if len(sys.argv) == 1:
