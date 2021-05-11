@@ -11,11 +11,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v1
-      - name: Set up Python 3.7
-        uses: actions/setup-python@v1
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v2
         with:
-          python-version: 3.7
+          python-version: 3.9
       - name: Linting
         run: |
           pip install flake8
@@ -28,23 +28,13 @@ jobs:
         os: [ubuntu-latest, macOS-latest, windows-latest]
 
     steps:
-      - uses: actions/checkout@v1
-      - name: Set up Python 3.7
-        uses: actions/setup-python@v1
-        with:
-          python-version: 3.7
-      - name: Install PDM
-        run: python -m pip install --upgrade pdm
-      - name: Set up Python
-        uses: actions/setup-python@v1
+      - uses: actions/checkout@v2
+      - name: Set up PDM
+        uses: pdm-project/setup-pdm@main
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
-        run: |
-          pdm use -f ${{ matrix.python-version }}
-          pdm config parallel_install false
-          pip install wheel setuptools
-          pdm install -d
+        run: pdm install -d
       - name: Run Tests
         run: |
           pdm run pytest tests
