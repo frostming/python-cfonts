@@ -1,17 +1,16 @@
 # -*- coding: utf-8 -*-
 """Test utility functions"""
 import pytest
-
-from cfonts.core import add_line, char_length, align_text, clean_input, colorize
 from cfonts.colors import (
-    get_closest,
-    hex_to_rgb,
     AnsiPen,
     TrueColorPen,
+    get_closest,
+    hex_to_rgb,
+    hsv_to_rgb,
     rgb_to_hex,
     rgb_to_hsv,
-    hsv_to_rgb,
 )
+from cfonts.core import add_line, align_text, char_length, clean_input, colorize
 
 
 def test_add_line_single_font():
@@ -128,8 +127,8 @@ def test_ansi_pen(color, is_background, style):
 @pytest.mark.parametrize(
     "color,is_background,style",
     [
-        ("#ff5f52", False, ("\x01\x1b[38;2;255;95;82m", "\x1b[39m")),
-        ("#ff5f52", True, ("\x01\x1b[48;2;255;95;82m", "\x1b[49m")),
+        ("#ff5f52", False, ("\x1b[38;2;255;95;82m", "\x1b[39m")),
+        ("#ff5f52", True, ("\x1b[48;2;255;95;82m", "\x1b[49m")),
     ],
 )
 def test_truecolor_pen(color, is_background, style):

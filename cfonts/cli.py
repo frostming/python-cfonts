@@ -8,10 +8,11 @@
 """
 import argparse
 import sys
+from typing import List, Optional
 
-from .consts import *  # noqa
-from .core import say, render
+from . import consts
 from .__version__ import __version__
+from .core import render, say
 
 
 class CFontsArgumentParser(argparse.ArgumentParser):
@@ -26,7 +27,9 @@ class CFontsArgumentParser(argparse.ArgumentParser):
         formatter.add_text(self.description)
 
         # usage
-        formatter.add_usage(self.usage, self._actions, self._mutually_exclusive_groups)
+        formatter.add_usage(
+            self.usage or "", self._actions, self._mutually_exclusive_groups
+        )
 
         # positionals, optionals and user-defined groups
         for action_group in self._action_groups:
@@ -42,7 +45,7 @@ class CFontsArgumentParser(argparse.ArgumentParser):
         return formatter.format_help()
 
 
-def parse_args():
+def parse_args() -> argparse.Namespace:
     parser = CFontsArgumentParser(
         "cfonts",
         description="This is a tool for sexy fonts in the console. "
@@ -60,24 +63,28 @@ def parse_args():
     parser.add_argument(
         "-f",
         "--font",
-        default=FONTFACES.block,
-        choices=FONTFACES.all(),
+        default=consts.FontFaces.block,
+        choices=consts.FontFaces,
+        type=consts.FontFaces,
         help="Use to define the font face",
     )
     parser.add_argument(
-        "-c", "--colors", default=COLORS.system, help="Use to define the font color"
+        "-c",
+        "--colors",
+        default=consts.Colors.system.value,
+        help="Use to define the font color",
     )
     parser.add_argument(
         "-b",
         "--background",
-        default=BGCOLORS.transparent,
+        default=consts.BgColors.transparent.value,
         help="Use to define the background color",
     )
     parser.add_argument(
         "-a",
         "--align",
         default="left",
-        choices=ALIGNMENT,
+        choices=consts.ALIGNMENT,
         help="Use to align the text output",
     )
     parser.add_argument(
@@ -130,16 +137,16 @@ def parse_args():
     return args
 
 
-def main():
+def main() -> None:
     args = parse_args()
 
     colors = [c.strip() for c in args.colors.split(",")]
     if args.gradient:
-        gradient = [g.strip() for g in args.gradient.split(",")]
+        gradient: Optional[List[str]] = [g.strip() for g in args.gradient.split(",")]
     else:
         gradient = None
     options = {
-        "font": args.font,
+        "font": args.font.value,
         "colors": colors,
         "background": args.background,
         "align": args.align,

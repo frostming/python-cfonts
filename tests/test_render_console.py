@@ -7,10 +7,9 @@ def test_render_console_default():
 
 
 def test_render_console_long_text():
-    assert (
-        render_console("this is a very long line to test multi lines", size=(10, 10))
-        == ["this is a", "very long", "line to te", "st multi l", "ines"]
-    )
+    assert render_console(
+        "this is a very long line to test multi lines", size=(10, 10)
+    ) == ["this is a", "very long", "line to te", "st multi l", "ines"]
 
 
 def test_render_console_align():
@@ -22,23 +21,22 @@ def test_render_console_align():
 def test_render_console_letter_spacing():
     assert render_console("text", letter_spacing=2, size=(10, 10)) == ["t e x t"]
     assert render_console("text", letter_spacing=3, size=(100, 10)) == ["t  e  x  t"]
-    assert (
-        render_console("text", letter_spacing=10, size=(100, 10))
-        == ["t         e         x         t"]
-    )
+    assert render_console("text", letter_spacing=10, size=(100, 10)) == [
+        "t         e         x         t"
+    ]
 
-    assert (
-        render_console("text|text", letter_spacing=2, size=(10, 10))
-        == ["t e x t", "t e x t"]
-    )
-    assert (
-        render_console("text|text", letter_spacing=3, size=(100, 10))
-        == ["t  e  x  t", "t  e  x  t"]
-    )
-    assert (
-        render_console("text|text", letter_spacing=10, size=(100, 10))
-        == ["t         e         x         t", "t         e         x         t"]
-    )
+    assert render_console("text|text", letter_spacing=2, size=(10, 10)) == [
+        "t e x t",
+        "t e x t",
+    ]
+    assert render_console("text|text", letter_spacing=3, size=(100, 10)) == [
+        "t  e  x  t",
+        "t  e  x  t",
+    ]
+    assert render_console("text|text", letter_spacing=10, size=(100, 10)) == [
+        "t         e         x         t",
+        "t         e         x         t",
+    ]
 
 
 def test_render_console_line_height():
@@ -61,39 +59,42 @@ def test_render_console_line_height():
 
 
 def test_render_console_line_break():
-    assert (
-        render_console("this is a long line", line_height=2, size=(10, 10))
-        == ["this is a", "", "long line", ""]
-    )
-    assert (
-        render_console("this is a long line", line_height=3, size=(10, 10))
-        == ["this is a", "", "", "long line", "", ""]
-    )
-    assert (
-        render_console("this is a long line", line_height=10, size=(10, 10))
-        == [
-            "this is a",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "long line",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-        ]
-    )
+    assert render_console("this is a long line", line_height=2, size=(10, 10)) == [
+        "this is a",
+        "",
+        "long line",
+        "",
+    ]
+    assert render_console("this is a long line", line_height=3, size=(10, 10)) == [
+        "this is a",
+        "",
+        "",
+        "long line",
+        "",
+        "",
+    ]
+    assert render_console("this is a long line", line_height=10, size=(10, 10)) == [
+        "this is a",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "long line",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+    ]
 
 
 def test_render_console_color(strip_color):

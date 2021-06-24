@@ -46,4 +46,3 @@ def test_add_letter_spacing_multi_lines(font):
         "_",
         "_",
     ]
-
