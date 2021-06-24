@@ -125,6 +125,10 @@ Ported by [@frostming](https://github.com/frostming), under MIT license. See [LI
 
 ## Changelog
 
+- **v1.5.1**
+  - Fix the truecolor display on Windows.
+  - Enable truecolor by default for Windows Terminal.
+  - Add type hints for the codebase.
 - **v1.5.0** Officially drop support of Python 2.7
 - **v1.4.0** Officially drop support of Python 3.5
 - **v1.3.1** Fix the sdist.
