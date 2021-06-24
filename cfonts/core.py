@@ -13,12 +13,8 @@ import random
 import re
 from typing import List, Mapping, Optional, Tuple
 
-import colorama
-
 from .colors import pen
 from .consts import ALIGNMENT, CHARS, SIZE, BgColors, CandyColors, Colors, FontFaces
-
-colorama.init()
 
 
 class Font:

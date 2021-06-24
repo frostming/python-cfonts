@@ -63,9 +63,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "-f",
         "--font",
-        default=consts.FontFaces.block,
-        choices=consts.FontFaces,
-        type=consts.FontFaces,
+        default=consts.FontFaces.block.value,
+        choices=[f.value for f in consts.FontFaces],
         help="Use to define the font face",
     )
     parser.add_argument(
@@ -146,7 +145,7 @@ def main() -> None:
     else:
         gradient = None
     options = {
-        "font": args.font.value,
+        "font": args.font,
         "colors": colors,
         "background": args.background,
         "align": args.align,

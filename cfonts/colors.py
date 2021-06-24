@@ -1,9 +1,10 @@
 """
 Utility functions for handling terminal colors
 """
-import colorsys
 import os
-from typing import Iterable, List, Mapping, NamedTuple, Tuple
+from typing import Iterable, List, Mapping, NamedTuple, Tuple, no_type_check
+
+import colorama
 
 from .consts import ANSI_COLORS, ANSI_RGB
 
@@ -15,6 +16,15 @@ class Style(NamedTuple):
 
 _Rgb = Tuple[int, int, int]
 _Hsv = Tuple[float, float, float]
+
+
+def support_truecolor() -> bool:
+    return os.name != "nt" or (
+        os.getenv("ANSICON") is not None
+        or os.getenv("WT_SESSION") is not None
+        or "ON" == os.getenv("ConEmuANSI")
+        or "xterm" == os.getenv("Term")
+    )
 
 
 def hex_to_rgb(hex_string: str) -> _Rgb:
@@ -33,12 +43,56 @@ def rgb_to_hex(rgb: _Rgb) -> str:
     return "#" + "".join("%02x" % c for c in rgb)
 
 
+@no_type_check
 def rgb_to_hsv(rgb: _Rgb) -> _Hsv:
-    return colorsys.rgb_to_hsv(*rgb)
+    r, g, b = rgb
+    r /= 255
+    g /= 255
+    b /= 255
+
+    max_value = max(r, g, b)
+    min_value = min(r, g, b)
+    diff = max_value - min_value
+
+    h, s, v = 0, diff / max_value if max_value > 0 else 0, max_value
+
+    if max_value == min_value:
+        h = 0
+    elif max_value == r:
+        h = 60 * (g - b) / diff
+        if g < b:
+            h += 360
+    elif max_value == g:
+        h = 60 * (b - r) / diff + 120
+    else:
+        h = 60 * (r - g) / diff + 240
+
+    return h, (s * 100), (v * 100)
 
 
 def hsv_to_rgb(hsv: _Hsv) -> _Rgb:
-    return tuple(int(c) for c in colorsys.hsv_to_rgb(*hsv))  # type: ignore
+    h, s, v = hsv
+    h /= 60
+    s /= 100
+    v /= 100
+    hi = int(h) % 6
+
+    f = h - int(h)
+    p = 255 * v * (1 - s)
+    q = 255 * v * (1 - (s * f))
+    t = 255 * v * (1 - (s * (1 - f)))
+    v *= 255
+
+    result = {
+        0: (v, t, p),
+        1: (q, v, p),
+        2: (p, v, t),
+        3: (p, q, v),
+        4: (t, p, v),
+        5: (v, p, q),
+    }[hi]
+    r, g, b = result
+    return int(r), int(g), int(b)
 
 
 def _color_distance(left: _Hsv, right: _Hsv) -> float:
@@ -147,10 +201,11 @@ class TrueColorPen(AnsiPen):
         return Style("\x1b[{};2;{};{};{}m".format(open_bit, r, g, b), close)
 
 
-if (os.getenv("DISABLE_TRUECOLOR") or os.name == "nt") and not os.getenv(
+if (os.getenv("DISABLE_TRUECOLOR") or not support_truecolor()) and not os.getenv(
     "ENABLE_TRUECOLOR"
 ):
     # Disable truecolor for windows
     pen = AnsiPen()
+    colorama.init()
 else:
     pen = TrueColorPen()
