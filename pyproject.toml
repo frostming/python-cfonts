@@ -2,16 +2,6 @@
 requires = ["pdm-pep517"]
 build-backend = "pdm.pep517.api"
 
-[tool.pdm.dev-dependencies]
-dev = [
-    "pytest",
-    "flake8",
-    "sphinx",
-]
-
-[tool.pdm.cli]
-cfonts = "cfonts.cli:main"
-
 [project]
 # PEP 621 project metadata
 # See https://www.python.org/dev/peps/pep-0621/
@@ -39,7 +29,31 @@ classifiers = [
 homepage = "https://github.com/frostming/python-cfonts"
 Documentation = "https://python-cfonts.readthedocs.io/"
 
-[project.optional-dependencies]
-
 [project.scripts]
 cfonts = "cfonts.cli:main"
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "pytest",
+    "flake8",
+    "sphinx",
+]
+
+[tool.isort]
+profile = "black"
+atomic = true
+skip_glob = ["*/setup.py", "pdm/_vendor/*"]
+filter_files = true
+known_first_party = ["pdm"]
+known_third_party = [
+    "appdirs",
+    "atoml",
+    "click",
+    "cfonts",
+    "distlib",
+    "halo",
+    "packaging",
+    "pip_shims",
+    "pytest",
+    "pythonfinder"
+]

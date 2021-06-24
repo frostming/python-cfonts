@@ -1,5 +1,6 @@
 """pytest configuration"""
 import re
+
 import pytest
 from cfonts.core import Font
 
@@ -24,6 +25,7 @@ def font():
 @pytest.fixture
 def strip_color():
     def func(text):
-        REGEX = re.compile(r'\x1b\[\d+?m')
-        return REGEX.sub('', text)
+        REGEX = re.compile(r"\x1b\[\d+?m")
+        return REGEX.sub("", text)
+
     return func

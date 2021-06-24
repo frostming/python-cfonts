@@ -9,7 +9,7 @@ def main():
         font="console",
         colors=["gray"],
         background="green",
-        align="center"
+        align="center",
     )
 
 

@@ -8,4 +8,4 @@
 """
 __all__ = ["say", "render"]
 
-from .core import say, render
+from .core import render, say

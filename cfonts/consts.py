@@ -6,21 +6,15 @@
     :license: GNU GPLv2
     :author: Frost Ming<mianghong@gmail.com>
 """
+import enum
 from shutil import get_terminal_size
+from typing import Mapping, Tuple
 
-SIZE = tuple(get_terminal_size((80, 24)))
+SIZE = get_terminal_size((80, 24))
 CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789|!?.+-_=@#$%&()/:;,' \""
 
 
-class Enum:
-    @classmethod
-    def all(cls):
-        return [
-            v for k, v in cls.__dict__.items() if not k.startswith("_") and k != "all"
-        ]
-
-
-class COLORS(Enum):
+class Colors(enum.Enum):
     system = "system"
     black = "black"
     red = "red"
@@ -40,7 +34,7 @@ class COLORS(Enum):
     bright_white = "bright_white"
 
 
-class CANDYCOLORS(Enum):
+class CandyColors(enum.Enum):
     red = "red"
     green = "green"
     yellow = "yellow"
@@ -56,7 +50,7 @@ class CANDYCOLORS(Enum):
     bright_cyan = "bright_cyan"
 
 
-class BGCOLORS(Enum):
+class BgColors(enum.Enum):
     transparent = "transparent"
     black = "black"
     red = "red"
@@ -79,7 +73,7 @@ class BGCOLORS(Enum):
 ALIGNMENT = ["left", "center", "right"]
 
 
-class FONTFACES(Enum):
+class FontFaces(enum.Enum):
     console = "console"
     block = "block"
     simpleblock = "simpleBlock"
@@ -114,7 +108,7 @@ ANSI_COLORS = {
     "bright_white": 97,
 }
 
-ANSI_RGB = {
+ANSI_RGB: Mapping[str, Tuple[int, int, int]] = {
     "black": (0, 0, 0),
     "red": (127, 0, 0),
     "green": (0, 127, 0),
