@@ -128,8 +128,8 @@ def parse_args() -> argparse.Namespace:
         "in the gradient option will then be transitioned to directly.",
     )
     parser.add_argument(
-        "-u",
-        "--copyable",
+        "-r",
+        "--raw",
         action="store_true",
         help="Instead of printing the colors, print the ANSI escape codes, so it "
         "can be copied and pasted into a Python print statement.",
@@ -162,7 +162,7 @@ def main() -> None:
         "gradient": gradient,
         "independent_gradient": args.independent_gradient,
         "transition": args.transition,
-        "copyable": args.copyable,
+        "raw": args.raw,
     }
     if args.letter_spacing is not None:
         options["letter_spacing"] = args.letter_spacing
