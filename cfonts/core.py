@@ -134,8 +134,8 @@ def colorize(line: str, font_colors: int, colors: List[str]) -> str:
             if color == Colors.candy.value:
                 color = random.choice(list(CandyColors)).value
             style = pen.style(color, False)
-            line = re.sub("<c{}>".format(i + 1), style.open, line)
-            line = re.sub("</c{}>".format(i + 1), style.close, line)
+            line = line.replace("<c{}>".format(i + 1), style.open)
+            line = line.replace("</c{}>".format(i + 1), style.close)
     elif font_colors == 1:
         try:
             color = colors[0]

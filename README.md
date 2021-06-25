@@ -125,6 +125,7 @@ Ported by [@frostming](https://github.com/frostming), under MIT license. See [LI
 
 ## Changelog
 
+- **v1.5.2** Fix the RGB color codes for truecolor system.
 - **v1.5.1**
   - Fix the truecolor display on Windows.
   - Enable truecolor by default for Windows Terminal.
