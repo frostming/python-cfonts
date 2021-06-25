@@ -354,7 +354,14 @@ def render(
         if output:
             output[0] = style.open + output[0]
             output[-1] += style.close
-    return "\n".join(output)
+    # easier to be before copyable, so you don't have to loop
+    output = "\n".join(output)
+    if copyable:
+        # replace the escape character with the bytes for the escape character
+        # \033 also works
+        output = output.replace("\x1b", "\\x1b")
+    
+    return output
 
 
 def say(text: str, **options) -> None:
