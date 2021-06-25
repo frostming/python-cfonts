@@ -247,6 +247,7 @@ def render(
     gradient: Optional[List[str]] = None,
     independent_gradient: bool = False,
     transition: bool = False,
+    copyable: bool = False,
 ) -> str:
     """Main function to get the colored output for a string.
 
