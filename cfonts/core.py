@@ -358,7 +358,7 @@ def render(
     if raw:
         # replace the escape character with the bytes for the escape character
         # \033 also works
-        return "\n".join(output).replace("\x1b", "\\x1b")
+        return repr("\n".join(output))[1:-1]
     else:
         return "\n".join(output)
 
