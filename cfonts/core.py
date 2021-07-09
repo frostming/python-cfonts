@@ -247,6 +247,7 @@ def render(
     gradient: Optional[List[str]] = None,
     independent_gradient: bool = False,
     transition: bool = False,
+    raw: bool = False,
 ) -> str:
     """Main function to get the colored output for a string.
 
@@ -354,7 +355,12 @@ def render(
         if output:
             output[0] = style.open + output[0]
             output[-1] += style.close
-    return "\n".join(output)
+    if raw:
+        # replace the escape character with the bytes for the escape character
+        # \033 also works
+        return repr("\n".join(output))[1:-1]
+    else:
+        return "\n".join(output)
 
 
 def say(text: str, **options) -> None:
