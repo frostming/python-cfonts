@@ -8,8 +8,7 @@ build-backend = "pdm.pep517.api"
 authors = [
     {name = "Frost Ming", email = "mianghong@gmail.com"},
 ]
-version = {from = "cfonts/__version__.py"}
-dynamic = ["version", "classifiers"]
+dynamic = ["version"]
 requires-python = ">=3.6"
 license = {text = "MIT"}
 dependencies = [
@@ -31,6 +30,9 @@ Documentation = "https://python-cfonts.readthedocs.io/"
 
 [project.scripts]
 cfonts = "cfonts.cli:main"
+
+[tool.pdm]
+version = {from = "cfonts/__version__.py"}
 
 [tool.pdm.dev-dependencies]
 dev = [
