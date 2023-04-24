@@ -306,7 +306,7 @@ def render(
                     char_length(font_face.letterspace, letter_spacing) * letter_spacing
                 )
 
-            if max_chars > max_length != 0 or c == "|" or line_length > size[0]:
+            if max_chars > int(max_length) != 0 or c == "|" or line_length > size[0]:
                 lines += 1
                 output = align_text(
                     output, last_line_length, font_face.lines, align, size
