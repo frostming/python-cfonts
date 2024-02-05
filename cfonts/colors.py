@@ -1,6 +1,7 @@
 """
 Utility functions for handling terminal colors
 """
+
 import os
 from typing import Iterable, List, Mapping, NamedTuple, Tuple, no_type_check
 

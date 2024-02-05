@@ -6,6 +6,7 @@
     :license: GNU GPLv2
     :author: Frost Ming<mianghong@gmail.com>
 """
+
 import enum
 from shutil import get_terminal_size
 from typing import Mapping, Tuple
