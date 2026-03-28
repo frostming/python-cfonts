@@ -98,7 +98,7 @@ def parse_args() -> argparse.Namespace:
         dest="space",
         default=True,
         action="store_false",
-        help="Use to define the background color",
+        help="Use to skip empty lines before and after the text output",
     )
 
     parser.add_argument(
