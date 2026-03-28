@@ -171,7 +171,7 @@ class AnsiPen:
         if transition and len(colors) < 2:
             raise ValueError("Transition gradient needs at least two colors")
         elif not transition and len(colors) != 2:
-            raise ValueError("Gradient needs exactly two colors")
+            raise ValueError("Gradient, if no transition, needs exactly two colors")
         rgb_colors = [_ensure_rgb(color) for color in colors]
         color_steps = [(steps - 1) // (len(rgb_colors) - 1)] * (len(rgb_colors) - 1)
         if sum(color_steps) < (steps - 1):
