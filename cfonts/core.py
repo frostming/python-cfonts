@@ -6,6 +6,7 @@
     :license: GNU GPLv2
     :author: Frost Ming<mianghong@gmail.com>
 """
+
 import argparse
 import json
 import pkgutil
