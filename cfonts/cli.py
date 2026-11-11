@@ -90,7 +90,11 @@ def parse_args() -> argparse.Namespace:
         "-l", "--letter-spacing", type=int, help="Use to define the letter spacing"
     )
     parser.add_argument(
-        "-z", "--line-height", default=1, help="Use to define the line height"
+        "-z",
+        "--line-height",
+        default=1,
+        type=int,
+        help="Use to define the line height",
     )
     parser.add_argument(
         "-s",
@@ -105,6 +109,7 @@ def parse_args() -> argparse.Namespace:
         "-m",
         "--max-length",
         default=0,
+        type=int,
         help="Use to define the amount of maximum characters per line",
     )
     parser.add_argument(
